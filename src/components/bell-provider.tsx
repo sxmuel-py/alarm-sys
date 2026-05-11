@@ -62,6 +62,9 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
   const [logs, setLogs] = useState<BellLog[]>([]);
   const [settings, setSettings] = useState<BellSettings>(defaultSettings);
   const triggeredRef = useRef<Set<string>>(new Set());
+  const currentAudioRef = useRef<HTMLAudioElement | null>(null);
+  const stopTimerRef = useRef<number | null>(null);
+  const objectUrlRef = useRef<string | null>(null);
 
   const writeLog = useCallback(
     (source: BellSource, message: string, detail: string) => {
@@ -76,6 +79,41 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
       setLogs((current) => [log, ...current].slice(0, 80));
     },
     [],
+  );
+
+  const stopActiveAudio = useCallback(() => {
+    if (stopTimerRef.current) {
+      window.clearTimeout(stopTimerRef.current);
+      stopTimerRef.current = null;
+    }
+
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current.currentTime = 0;
+      currentAudioRef.current = null;
+    }
+
+    if (objectUrlRef.current) {
+      URL.revokeObjectURL(objectUrlRef.current);
+      objectUrlRef.current = null;
+    }
+
+    setAudioStatus("not-enabled");
+  }, []);
+
+  const scheduleAudioStop = useCallback(
+    (audio: HTMLAudioElement) => {
+      if (stopTimerRef.current) {
+        window.clearTimeout(stopTimerRef.current);
+      }
+
+      stopTimerRef.current = window.setTimeout(() => {
+        if (currentAudioRef.current === audio) {
+          stopActiveAudio();
+        }
+      }, settings.bellDuration * 1000);
+    },
+    [settings.bellDuration, stopActiveAudio],
   );
 
   const ringBell = useCallback(
@@ -97,33 +135,74 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
           ? `${entry?.time ?? "--:--"} scheduled bell`
           : "Triggered from dashboard control";
 
+      stopActiveAudio();
       writeLog(source, `${label} bell triggered`, detail);
 
       const audio = new Audio(customBellAudioPath);
-      let generatedObjectUrl: string | null = null;
+      let triedGeneratedFallback = false;
+
+      currentAudioRef.current = audio;
 
       audio.volume = Math.min(1, Math.max(0, settings.bellVolume / 100));
-      audio.onended = () => {
-        if (generatedObjectUrl) URL.revokeObjectURL(generatedObjectUrl);
-      };
-      audio.onerror = () => {
-        generatedObjectUrl = URL.createObjectURL(
+      const playGeneratedFallback = () => {
+        if (triedGeneratedFallback || currentAudioRef.current !== audio) return false;
+
+        triedGeneratedFallback = true;
+        objectUrlRef.current = URL.createObjectURL(
           createBellWav(tone, settings.bellVolume, settings.bellDuration),
         );
-        audio.src = generatedObjectUrl;
-        audio.play().catch(() => {
-          setAudioStatus("not-enabled");
-          if (generatedObjectUrl) URL.revokeObjectURL(generatedObjectUrl);
+        audio.src = objectUrlRef.current;
+        audio
+          .play()
+          .then(() => {
+            setAudioStatus("enabled");
+            scheduleAudioStop(audio);
+          })
+          .catch(() => {
+            stopActiveAudio();
+            writeLog(
+              "system",
+              "Browser blocked audio playback",
+              "Interact with the page once, then try again",
+            );
+          });
+
+        return true;
+      };
+
+      audio.onended = () => {
+        if (currentAudioRef.current === audio) {
+          stopActiveAudio();
+        }
+      };
+      audio.onerror = () => {
+        playGeneratedFallback();
+      };
+      audio
+        .play()
+        .then(() => {
+          setAudioStatus("enabled");
+          scheduleAudioStop(audio);
+        })
+        .catch(() => {
+          if (playGeneratedFallback()) return;
+
+          stopActiveAudio();
           writeLog(
             "system",
             "Browser blocked audio playback",
             "Interact with the page once, then try again",
           );
         });
-      };
-      audio.play().then(() => setAudioStatus("enabled"));
     },
-    [settings.bellDuration, settings.bellVolume, status, writeLog],
+    [
+      scheduleAudioStop,
+      settings.bellDuration,
+      settings.bellVolume,
+      status,
+      stopActiveAudio,
+      writeLog,
+    ],
   );
 
   const setStatus = useCallback(
@@ -146,12 +225,13 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
   const emergencyStop = useCallback(() => {
     setStatusState("emergency-stopped");
     triggeredRef.current.clear();
+    stopActiveAudio();
     writeLog(
       "system",
       "Emergency stop activated",
       "Automatic bell triggers disabled until schedule is resumed",
     );
-  }, [writeLog]);
+  }, [stopActiveAudio, writeLog]);
 
   useEffect(() => {
     window.queueMicrotask(() => setCurrentTime(new Date()));
@@ -276,7 +356,7 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
       },
       resetDemoData: () => {
         setStatusState("active");
-        setAudioStatus("not-enabled");
+        stopActiveAudio();
         setSchedule(defaultSchedule);
         setLogs([]);
         setSettings(defaultSettings);
@@ -293,6 +373,7 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
       setStatus,
       settings,
       status,
+      stopActiveAudio,
       writeLog,
     ],
   );

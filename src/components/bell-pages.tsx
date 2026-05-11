@@ -13,7 +13,7 @@ import {
   getTodaysOperationalSchedule,
   timeToSeconds,
 } from "@/lib/bell-data";
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 
 const weekdays = [1, 2, 3, 4, 5];
 const toneOptions: BellTone[] = ["classic", "short", "chime"];
@@ -551,6 +551,10 @@ export function LogsPage() {
 export function SettingsPage() {
   const { settings, updateSettings, resetDemoData, ringBell } = useBellSystem();
   const [draft, setDraft] = useState(settings);
+
+  useEffect(() => {
+    window.queueMicrotask(() => setDraft(settings));
+  }, [settings]);
 
   function submitSettings(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
