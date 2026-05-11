@@ -19,7 +19,17 @@ Open the local URL printed by Next.js. If port `3000` is busy, Next.js will choo
 - Pause and resume schedule control
 - Event logs for manual, automatic, and system actions
 - Browser JSON mocked storage through `localStorage`
-- Local HTML5 Audio playback with generated WAV bell tones
+- Local HTML5 Audio playback from `public/sounds/bell.mp3`, with generated WAV fallback
+
+## Custom Bell Sound
+
+Place the bell audio file at:
+
+```text
+public/sounds/bell.mp3
+```
+
+Restart `npm run dev` after adding or replacing the file.
 
 ## Notes
 

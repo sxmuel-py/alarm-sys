@@ -50,6 +50,8 @@ const storageKeys = {
   settings: "school-bell-settings",
 };
 
+const customBellAudioPath = "/sounds/bell.mp3";
+
 export function BellProvider({ children }: { children: React.ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
   const [currentTime, setCurrentTime] = useState(() => new Date(0));
@@ -97,27 +99,29 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
 
       writeLog(source, `${label} bell triggered`, detail);
 
-      const audio = new Audio();
-      const objectUrl = URL.createObjectURL(
-        createBellWav(tone, settings.bellVolume, settings.bellDuration),
-      );
+      const audio = new Audio(customBellAudioPath);
+      let generatedObjectUrl: string | null = null;
 
-      audio.src = objectUrl;
       audio.volume = Math.min(1, Math.max(0, settings.bellVolume / 100));
-      audio.onended = () => URL.revokeObjectURL(objectUrl);
-      audio.onerror = () => URL.revokeObjectURL(objectUrl);
-      audio
-        .play()
-        .then(() => setAudioStatus("enabled"))
-        .catch(() => {
+      audio.onended = () => {
+        if (generatedObjectUrl) URL.revokeObjectURL(generatedObjectUrl);
+      };
+      audio.onerror = () => {
+        generatedObjectUrl = URL.createObjectURL(
+          createBellWav(tone, settings.bellVolume, settings.bellDuration),
+        );
+        audio.src = generatedObjectUrl;
+        audio.play().catch(() => {
           setAudioStatus("not-enabled");
-          URL.revokeObjectURL(objectUrl);
+          if (generatedObjectUrl) URL.revokeObjectURL(generatedObjectUrl);
           writeLog(
             "system",
             "Browser blocked audio playback",
             "Interact with the page once, then try again",
           );
         });
+      };
+      audio.play().then(() => setAudioStatus("enabled"));
     },
     [settings.bellDuration, settings.bellVolume, status, writeLog],
   );
