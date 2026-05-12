@@ -13,6 +13,7 @@ import {
   getTodaysOperationalSchedule,
   timeToSeconds,
 } from "@/lib/bell-data";
+import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 
 const weekdays = [1, 2, 3, 4, 5];
@@ -34,6 +35,9 @@ export function DashboardPage() {
     currentTime,
     status,
     audioStatus,
+    playerStatus,
+    hostPlayerOnline,
+    storageStatus,
     setStatus,
     emergencyStop,
     schedule,
@@ -82,8 +86,9 @@ export function DashboardPage() {
       />
 
       <div className="rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-sm font-medium text-blue-900">
-        Demo Mode: Audio is currently playing from this computer only. PA system
-        integration is not connected yet.
+        Demo Mode: Shared control is available over your local network, but bell
+        audio will only play from the main host computer when Player Mode is open
+        and armed.
       </div>
 
       {status === "emergency-stopped" ? (
@@ -204,8 +209,13 @@ export function DashboardPage() {
                 </span>
               </ReliabilityRow>
               <ReliabilityRow label="Storage status">
-                <span className="font-semibold text-slate-950">
-                  LocalStorage active
+                <span className="font-semibold text-slate-950">{storageStatus}</span>
+              </ReliabilityRow>
+              <ReliabilityRow label="Host player">
+                <span className="text-right font-medium text-slate-700">
+                  {hostPlayerOnline
+                    ? `${playerStatus.label} online`
+                    : "Main player waiting"}
                 </span>
               </ReliabilityRow>
               <ReliabilityRow label="Last system action">
@@ -549,7 +559,15 @@ export function LogsPage() {
 }
 
 export function SettingsPage() {
-  const { settings, updateSettings, resetDemoData, ringBell } = useBellSystem();
+  const {
+    settings,
+    updateSettings,
+    resetDemoData,
+    ringBell,
+    playerStatus,
+    hostPlayerOnline,
+    storageStatus,
+  } = useBellSystem();
   const [draft, setDraft] = useState(settings);
 
   useEffect(() => {
@@ -672,18 +690,26 @@ export function SettingsPage() {
               <dl className="space-y-3 text-sm">
                 <div className="flex items-center justify-between">
                   <dt className="text-slate-500">Storage</dt>
-                  <dd className="font-semibold text-slate-950">Browser JSON</dd>
+                  <dd className="font-semibold text-slate-950">{storageStatus}</dd>
                 </div>
                 <div className="flex items-center justify-between">
-                  <dt className="text-slate-500">PA integration</dt>
-                  <dd className="font-semibold text-slate-950">Not connected</dd>
+                  <dt className="text-slate-500">Host player</dt>
+                  <dd className="font-semibold text-slate-950">
+                    {hostPlayerOnline ? "Connected" : "Waiting"}
+                  </dd>
                 </div>
                 <div className="flex items-center justify-between">
-                  <dt className="text-slate-500">Authentication</dt>
-                  <dd className="font-semibold text-slate-950">Disabled</dd>
+                  <dt className="text-slate-500">Playback page</dt>
+                  <dd className="font-semibold text-slate-950">{playerStatus.label}</dd>
                 </div>
               </dl>
             </div>
+            <Link
+              href="/player"
+              className="block w-full rounded-lg border border-blue-200 bg-blue-50 px-4 py-2.5 text-center text-sm font-semibold text-blue-800 transition hover:bg-blue-100"
+            >
+              Open Player Mode on Main PC
+            </Link>
             <button
               type="button"
               onClick={() => {
@@ -700,17 +726,21 @@ export function SettingsPage() {
         <Panel title="PA Integration Notes">
           <ul className="space-y-3 text-sm leading-6 text-slate-600">
             <li>
-              Current MVP plays bell audio locally through the computer.
+              Current LAN MVP stores schedule, logs, and settings on the host
+              computer so all operators see the same state.
+            </li>
+            <li>
+              Bell audio is now intended to play from the dedicated host computer
+              through the Player Mode page, even when operators access the dashboard
+              from another system by IP.
             </li>
             <li>
               Final deployment would connect the dedicated PC audio output to the
               existing PA mixer/amplifier input.
             </li>
             <li>
-              The existing PA system must be inspected before connection.
-            </li>
-            <li>
-              Building zones and microphone override behavior must be confirmed.
+              The existing PA system must be inspected before connection, and
+              building zones plus microphone override behavior must be confirmed.
             </li>
             <li>
               First real-world test should be done on one building or one audio

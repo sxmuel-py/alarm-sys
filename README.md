@@ -63,6 +63,40 @@ Run `npm install` again only when:
 - `package.json` or `package-lock.json` changed after pulling updates
 - the app complains that a package is missing
 
+## LAN / Network Mode
+
+This project now supports a host-based LAN MVP:
+
+- the main school PC runs the app
+- other computers on the same network can open the dashboard by IP
+- bell audio stays on the main host computer through the dedicated Player Mode page
+
+Start the app so other systems can reach it on the network:
+
+```bash
+npm run dev:lan
+```
+
+Then open the dashboard from another system using the main PC IP:
+
+```text
+http://MAIN-PC-IP:3000
+```
+
+If Next.js picks another port, use that port instead.
+
+## Required Host Workflow
+
+For shared LAN use, the main bell computer should:
+
+1. Run `npm run dev:lan`
+2. Open the dashboard locally
+3. Open `/player` on that same host computer
+4. Click `Enable Player Audio`
+5. Leave the Player Mode page open during school hours
+
+This matters because the dashboard can be opened from any computer on the LAN, but only the host machine's Player Mode page should actually play the bell.
+
 ## Updating an Existing Clone
 
 If the project is already cloned on a Windows 10 desktop, open Command Prompt or PowerShell inside the project folder and run:
@@ -113,7 +147,9 @@ Settings are saved in the browser using `localStorage`, so they stay on the same
 
 ## Demo Mode and PA Notes
 
-This MVP plays audio from the local computer only. It does not connect directly to the school PA system yet.
+This MVP now stores schedule, settings, logs, and bell trigger state on the host computer in a local JSON file under `data/`.
+
+It still does not connect directly to the school PA system yet.
 
 For a real deployment, the dedicated PC audio output would need to connect to the existing PA mixer or amplifier input. Before doing that, the existing PA system must be inspected, building zones must be confirmed, microphone override behavior must be understood, and the first test should be limited to one building or one audio zone.
 

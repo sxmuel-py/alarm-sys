@@ -10,11 +10,17 @@ const navigation = [
   { href: "/schedule", label: "Schedule", marker: "S" },
   { href: "/logs", label: "Logs", marker: "L" },
   { href: "/settings", label: "Settings", marker: "G" },
+  { href: "/player", label: "Player", marker: "P" },
 ];
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { status, setStatus, settings } = useBellSystem();
+
+  if (pathname.startsWith("/player")) {
+    return <>{children}</>;
+  }
+
   const statusLabel =
     status === "active"
       ? "Active"

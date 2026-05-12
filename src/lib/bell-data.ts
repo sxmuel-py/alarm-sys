@@ -29,6 +29,46 @@ export type BellSettings = {
   autoTriggerWindowSeconds: number;
 };
 
+export type AudioStatus = "enabled" | "not-enabled";
+
+export type PlayerStatus = {
+  lastSeenAt: string | null;
+  audioEnabled: boolean;
+  label: string;
+};
+
+export type BellRingSignal = {
+  id: string;
+  type: "ring";
+  createdAt: string;
+  source: BellSource;
+  entryId: string | null;
+  label: string;
+  tone: BellTone;
+  durationSeconds: number;
+  volume: number;
+  detail: string;
+};
+
+export type BellStopSignal = {
+  id: string;
+  type: "stop";
+  createdAt: string;
+  reason: string;
+};
+
+export type PlayerSignal = BellRingSignal | BellStopSignal;
+
+export type BellSystemSnapshot = {
+  status: BellStatus;
+  schedule: ScheduleEntry[];
+  logs: BellLog[];
+  settings: BellSettings;
+  playerStatus: PlayerStatus;
+  serverTime: string;
+  storageStatus: string;
+};
+
 export const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export const defaultSchedule: ScheduleEntry[] = [
@@ -94,6 +134,14 @@ export const defaultSettings: BellSettings = {
   bellDuration: 3,
   autoTriggerWindowSeconds: 45,
 };
+
+export const defaultPlayerStatus: PlayerStatus = {
+  lastSeenAt: null,
+  audioEnabled: false,
+  label: "Main player workstation",
+};
+
+export const playerHeartbeatTimeoutMs = 15_000;
 
 export function formatLongTime(date: Date) {
   return new Intl.DateTimeFormat("en", {
@@ -197,6 +245,20 @@ export function getNextBell(schedule: ScheduleEntry[], date: Date) {
   }
 
   return null;
+}
+
+export function isPlayerOnline(
+  playerStatus: PlayerStatus,
+  now: Date = new Date(),
+) {
+  if (!playerStatus.lastSeenAt) {
+    return false;
+  }
+
+  return (
+    now.getTime() - new Date(playerStatus.lastSeenAt).getTime() <
+    playerHeartbeatTimeoutMs
+  );
 }
 
 function dateAtTime(date: Date, time: string) {
