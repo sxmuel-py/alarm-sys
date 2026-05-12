@@ -82,14 +82,23 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
   );
 
   const stopActiveAudio = useCallback(() => {
-    if (stopTimerRef.current) {
+    if (stopTimerRef.current !== null) {
       window.clearTimeout(stopTimerRef.current);
       stopTimerRef.current = null;
     }
 
     if (currentAudioRef.current) {
-      currentAudioRef.current.pause();
-      currentAudioRef.current.currentTime = 0;
+      const audio = currentAudioRef.current;
+      audio.onended = null;
+      audio.onerror = null;
+      audio.pause();
+
+      try {
+        audio.currentTime = 0;
+      } catch {
+        // Some browsers will throw if the media source is no longer seekable.
+      }
+
       currentAudioRef.current = null;
     }
 
@@ -102,18 +111,19 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const scheduleAudioStop = useCallback(
-    (audio: HTMLAudioElement) => {
-      if (stopTimerRef.current) {
+    (audio: HTMLAudioElement, durationSeconds: number) => {
+      if (stopTimerRef.current !== null) {
         window.clearTimeout(stopTimerRef.current);
       }
 
+      const duration = Math.max(1, Math.min(60, durationSeconds));
       stopTimerRef.current = window.setTimeout(() => {
         if (currentAudioRef.current === audio) {
           stopActiveAudio();
         }
-      }, settings.bellDuration * 1000);
+      }, duration * 1000);
     },
-    [settings.bellDuration, stopActiveAudio],
+    [stopActiveAudio],
   );
 
   const ringBell = useCallback(
@@ -130,6 +140,8 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
 
       const label = entry?.label ?? "Manual override";
       const tone = entry?.tone ?? "classic";
+      const bellVolume = Math.min(100, Math.max(0, settings.bellVolume));
+      const bellDuration = Math.max(1, Math.min(60, settings.bellDuration));
       const detail =
         source === "automatic"
           ? `${entry?.time ?? "--:--"} scheduled bell`
@@ -143,20 +155,21 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
 
       currentAudioRef.current = audio;
 
-      audio.volume = Math.min(1, Math.max(0, settings.bellVolume / 100));
+      audio.loop = true;
+      audio.volume = Math.min(1, Math.max(0, bellVolume / 100));
       const playGeneratedFallback = () => {
         if (triedGeneratedFallback || currentAudioRef.current !== audio) return false;
 
         triedGeneratedFallback = true;
         objectUrlRef.current = URL.createObjectURL(
-          createBellWav(tone, settings.bellVolume, settings.bellDuration),
+          createBellWav(tone, bellVolume, bellDuration),
         );
         audio.src = objectUrlRef.current;
         audio
           .play()
           .then(() => {
             setAudioStatus("enabled");
-            scheduleAudioStop(audio);
+            scheduleAudioStop(audio, bellDuration);
           })
           .catch(() => {
             stopActiveAudio();
@@ -182,7 +195,7 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
         .play()
         .then(() => {
           setAudioStatus("enabled");
-          scheduleAudioStop(audio);
+          scheduleAudioStop(audio, bellDuration);
         })
         .catch(() => {
           if (playGeneratedFallback()) return;
@@ -402,7 +415,7 @@ function readJson<T>(key: string) {
 
 function createBellWav(tone: BellTone, volume: number, durationSeconds: number) {
   const sampleRate = 44100;
-  const duration = Math.max(1, Math.min(8, durationSeconds));
+  const duration = Math.max(1, Math.min(60, durationSeconds));
   const sampleCount = Math.floor(sampleRate * duration);
   const dataLength = sampleCount * 2;
   const buffer = new ArrayBuffer(44 + dataLength);

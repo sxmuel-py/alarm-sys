@@ -612,7 +612,7 @@ export function SettingsPage() {
               <input
                 type="range"
                 min="1"
-                max="8"
+                max="60"
                 value={draft.bellDuration}
                 onChange={(event) =>
                   setDraft((current) => ({
