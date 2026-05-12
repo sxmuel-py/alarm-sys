@@ -23,14 +23,8 @@ type PlayerPollResponse = {
 };
 
 export function PlayerConsole() {
-  const [currentTime, setCurrentTime] = useState(() => new Date());
-  const [playerLabel, setPlayerLabel] = useState(() => {
-    if (typeof window === "undefined") {
-      return "Main bell PC";
-    }
-
-    return window.localStorage.getItem(playerLabelStorageKey) ?? "Main bell PC";
-  });
+  const [currentTime, setCurrentTime] = useState(() => new Date(0));
+  const [playerLabel, setPlayerLabel] = useState("Main bell PC");
   const [audioEnabled, setAudioEnabled] = useState(false);
   const [snapshot, setSnapshot] = useState<BellSystemSnapshot>({
     status: "active",
@@ -48,10 +42,19 @@ export function PlayerConsole() {
   const objectUrlRef = useRef<string | null>(null);
 
   useEffect(() => {
+    window.queueMicrotask(() => {
+      setCurrentTime(new Date());
+      setPlayerLabel(window.localStorage.getItem(playerLabelStorageKey) ?? "Main bell PC");
+    });
+  }, []);
+
+  useEffect(() => {
     window.localStorage.setItem(playerLabelStorageKey, playerLabel);
   }, [playerLabel]);
 
   useEffect(() => {
+    window.queueMicrotask(() => setCurrentTime(new Date()));
+
     const interval = window.setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);

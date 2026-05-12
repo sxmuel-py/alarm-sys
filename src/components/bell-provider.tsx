@@ -60,7 +60,7 @@ function createFallbackSnapshot(): BellSystemSnapshot {
 }
 
 export function BellProvider({ children }: { children: React.ReactNode }) {
-  const [currentTime, setCurrentTime] = useState(() => new Date());
+  const [currentTime, setCurrentTime] = useState(() => new Date(0));
   const [snapshot, setSnapshot] = useState<BellSystemSnapshot>(createFallbackSnapshot);
 
   const applySnapshot = useCallback((nextSnapshot: BellSystemSnapshot) => {
@@ -112,6 +112,8 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
   }, [refresh]);
 
   useEffect(() => {
+    window.queueMicrotask(() => setCurrentTime(new Date()));
+
     const interval = window.setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
