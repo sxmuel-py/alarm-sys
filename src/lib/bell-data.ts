@@ -2,7 +2,7 @@ export type BellStatus = "active" | "paused" | "emergency-stopped";
 
 export type BellSource = "automatic" | "manual" | "system";
 
-export type BellTone = "classic" | "short" | "chime";
+export type BellTone = string;
 
 export type ScheduleEntry = {
   id: string;
@@ -67,6 +67,7 @@ export type BellSystemSnapshot = {
   playerStatus: PlayerStatus;
   serverTime: string;
   storageStatus: string;
+  availableSounds?: string[];
 };
 
 export const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -267,3 +268,60 @@ function dateAtTime(date: Date, time: string) {
   nextDate.setHours(hours, minutes, 0, 0);
   return nextDate;
 }
+
+export function createBellWav(tone: BellTone, volume: number, durationSeconds: number) {
+  const sampleRate = 44100;
+  const duration = Math.max(1, Math.min(60, durationSeconds));
+  const sampleCount = Math.floor(sampleRate * duration);
+  const dataLength = sampleCount * 2;
+  const buffer = new ArrayBuffer(44 + dataLength);
+  const view = new DataView(buffer);
+  const normalizedVolume = Math.min(1, Math.max(0.05, volume / 100));
+
+  writeString(view, 0, "RIFF");
+  view.setUint32(4, 36 + dataLength, true);
+  writeString(view, 8, "WAVE");
+  writeString(view, 12, "fmt ");
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * 2, true);
+  view.setUint16(32, 2, true);
+  view.setUint16(34, 16, true);
+  writeString(view, 36, "data");
+  view.setUint32(40, dataLength, true);
+
+  for (let index = 0; index < sampleCount; index += 1) {
+    const t = index / sampleRate;
+    const envelope = Math.min(1, t * 8) * Math.max(0, 1 - t / duration);
+    const wave = toneWave(t, tone) * envelope * normalizedVolume;
+    view.setInt16(44 + index * 2, Math.max(-1, Math.min(1, wave)) * 0x7fff, true);
+  }
+
+  return new Blob([view], { type: "audio/wav" });
+}
+
+function toneWave(t: number, tone: BellTone) {
+  if (tone === "short") {
+    return Math.sin(2 * Math.PI * 980 * t);
+  }
+
+  if (tone === "chime") {
+    return (
+      Math.sin(2 * Math.PI * 523.25 * t) * 0.45 +
+      Math.sin(2 * Math.PI * 659.25 * t) * 0.35 +
+      Math.sin(2 * Math.PI * 783.99 * t) * 0.2
+    );
+  }
+
+  const pulse = Math.sin(2 * Math.PI * 3.5 * t) > -0.2 ? 1 : 0.35;
+  return Math.sin(2 * Math.PI * 880 * t) * pulse;
+}
+
+function writeString(view: DataView, offset: number, value: string) {
+  for (let index = 0; index < value.length; index += 1) {
+    view.setUint8(offset + index, value.charCodeAt(index));
+  }
+}
+

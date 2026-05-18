@@ -2,6 +2,7 @@ import "server-only";
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { exec } from "node:child_process";
 import {
   BellLog,
   BellSettings,
@@ -142,8 +143,7 @@ function normalizeScheduleEntry(value: ScheduleEntry): ScheduleEntry {
     days: Array.isArray(value.days)
       ? value.days.filter((day): day is number => Number.isInteger(day) && day >= 0 && day <= 6)
       : [1, 2, 3, 4, 5],
-    tone:
-      value.tone === "short" || value.tone === "chime" ? value.tone : "classic",
+    tone: typeof value.tone === "string" ? value.tone : "classic",
     enabled: value.enabled !== false,
     note: typeof value.note === "string" ? value.note : "",
   };
@@ -207,10 +207,7 @@ function normalizeSignal(value: PlayerSignal | null | undefined) {
         value.source === "automatic" || value.source === "manual"
           ? value.source
           : "system",
-      tone:
-        value.tone === "short" || value.tone === "chime"
-          ? value.tone
-          : "classic",
+      tone: typeof value.tone === "string" ? value.tone : "classic",
       entryId: typeof value.entryId === "string" ? value.entryId : null,
       durationSeconds: clamp(value.durationSeconds, 1, 60),
       volume: clamp(value.volume, 0, 100),
@@ -280,6 +277,48 @@ function writeLog(store: BellSystemStore, source: BellSource, message: string, d
   ].slice(0, 200);
 }
 
+function playSoundOnServer(tone: string, volume: number, durationSeconds: number) {
+  if (process.platform !== "darwin") {
+    return;
+  }
+
+  // Kill any running afplay processes first to avoid overlapping audio
+  exec("killall afplay", () => {
+    // Determine path to the audio file
+    const isCustomFile =
+      tone.includes(".") ||
+      tone.endsWith(".mp3") ||
+      tone.endsWith(".wav") ||
+      tone.endsWith(".ogg") ||
+      tone.endsWith(".m4a") ||
+      tone.endsWith(".aac");
+
+    let relativePath = "";
+    if (isCustomFile) {
+      relativePath = `public/sounds/${tone}`;
+    } else {
+      // Map built-in tone keys to their generated files
+      if (tone === "short") {
+        relativePath = "public/sounds/short_beep.wav";
+      } else if (tone === "chime") {
+        relativePath = "public/sounds/recess_chime.wav";
+      } else {
+        relativePath = "public/sounds/classic_school_bell.wav";
+      }
+    }
+
+    const absolutePath = path.join(process.cwd(), relativePath);
+    const vol = Math.min(1, Math.max(0, volume / 100));
+
+    // Play sound natively using afplay with volume and duration limits
+    exec(`afplay -v ${vol} -t ${durationSeconds} "${absolutePath}"`, (error) => {
+      if (error && !error.killed) {
+        console.error("afplay server-side playback failed:", error);
+      }
+    });
+  });
+}
+
 function queueRingSignal(
   store: BellSystemStore,
   entry: ScheduleEntry | null,
@@ -303,9 +342,15 @@ function queueRingSignal(
 
   store.playerSignals.push(signal);
   writeLog(store, source, `${label} bell triggered`, detail);
+
+  // Play natively on the host Mac server so it sounds directly from the server computer
+  playSoundOnServer(tone, store.settings.bellVolume, store.settings.bellDuration);
 }
 
 function queueStopSignal(store: BellSystemStore, reason: string) {
+  if (process.platform === "darwin") {
+    exec("killall afplay", () => {});
+  }
   store.playerSignals = [
     {
       id: crypto.randomUUID(),
@@ -316,7 +361,26 @@ function queueStopSignal(store: BellSystemStore, reason: string) {
   ];
 }
 
-function buildSnapshot(store: BellSystemStore): BellSystemSnapshot {
+async function getAvailableSounds(): Promise<string[]> {
+  const soundsDir = path.join(process.cwd(), "public", "sounds");
+  try {
+    await fs.mkdir(soundsDir, { recursive: true });
+    const files = await fs.readdir(soundsDir);
+    return files.filter((file) => {
+      const ext = path.extname(file).toLowerCase();
+      return (
+        !file.startsWith(".") &&
+        [".mp3", ".wav", ".ogg", ".m4a", ".aac", ".mp4"].includes(ext)
+      );
+    });
+  } catch (error) {
+    console.error("Error reading sounds directory:", error);
+    return [];
+  }
+}
+
+async function buildSnapshot(store: BellSystemStore): Promise<BellSystemSnapshot> {
+  const availableSounds = await getAvailableSounds();
   return {
     status: store.status,
     schedule: store.schedule,
@@ -325,6 +389,7 @@ function buildSnapshot(store: BellSystemStore): BellSystemSnapshot {
     playerStatus: store.playerStatus,
     serverTime: new Date().toISOString(),
     storageStatus,
+    availableSounds,
   };
 }
 
@@ -370,14 +435,14 @@ function sortSchedule(entries: ScheduleEntry[]) {
 }
 
 export async function getBellSystemSnapshot() {
-  return withStoreLock((store) => {
+  return withStoreLock(async (store) => {
     processAutomaticTriggers(store, new Date());
-    return buildSnapshot(store);
+    return await buildSnapshot(store);
   });
 }
 
 export async function dispatchBellAction(action: BellAction) {
-  return withStoreLock((store) => {
+  return withStoreLock(async (store) => {
     processAutomaticTriggers(store, new Date());
 
     switch (action.type) {
@@ -479,12 +544,12 @@ export async function dispatchBellAction(action: BellAction) {
         break;
     }
 
-    return buildSnapshot(store);
+    return await buildSnapshot(store);
   });
 }
 
 export async function pollPlayer(input: PlayerPollInput): Promise<PlayerPollResult> {
-  return withStoreLock((store) => {
+  return withStoreLock(async (store) => {
     processAutomaticTriggers(store, new Date());
 
     store.playerStatus = {
@@ -501,14 +566,14 @@ export async function pollPlayer(input: PlayerPollInput): Promise<PlayerPollResu
       const [signal] = store.playerSignals.splice(stopSignalIndex, 1);
       return {
         signal,
-        snapshot: buildSnapshot(store),
+        snapshot: await buildSnapshot(store),
       };
     }
 
     if (!input.audioEnabled) {
       return {
         signal: null,
-        snapshot: buildSnapshot(store),
+        snapshot: await buildSnapshot(store),
       };
     }
 
@@ -517,13 +582,13 @@ export async function pollPlayer(input: PlayerPollInput): Promise<PlayerPollResu
       const [signal] = store.playerSignals.splice(ringSignalIndex, 1);
       return {
         signal,
-        snapshot: buildSnapshot(store),
+        snapshot: await buildSnapshot(store),
       };
     }
 
     return {
       signal: null,
-      snapshot: buildSnapshot(store),
+      snapshot: await buildSnapshot(store),
     };
   });
 }

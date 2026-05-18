@@ -12,12 +12,78 @@ import {
   formatLongTime,
   getTodaysOperationalSchedule,
   timeToSeconds,
+  createBellWav,
 } from "@/lib/bell-data";
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 
 const weekdays = [1, 2, 3, 4, 5];
-const toneOptions: BellTone[] = ["classic", "short", "chime"];
+
+let activePreviewAudio: HTMLAudioElement | null = null;
+let activePreviewObjectUrl: string | null = null;
+let activePreviewTimeout: any = null;
+
+function stopSoundPreview() {
+  if (activePreviewAudio) {
+    activePreviewAudio.pause();
+    activePreviewAudio = null;
+  }
+  if (activePreviewObjectUrl) {
+    URL.revokeObjectURL(activePreviewObjectUrl);
+    activePreviewObjectUrl = null;
+  }
+  if (activePreviewTimeout) {
+    window.clearTimeout(activePreviewTimeout);
+    activePreviewTimeout = null;
+  }
+}
+
+function playSoundPreview(tone: string, volume: number, durationSeconds: number) {
+  stopSoundPreview();
+
+  const isCustomFile =
+    tone.includes(".") ||
+    tone.endsWith(".mp3") ||
+    tone.endsWith(".wav") ||
+    tone.endsWith(".ogg") ||
+    tone.endsWith(".m4a") ||
+    tone.endsWith(".aac");
+
+  const audioPath = isCustomFile ? `/sounds/${tone}` : `/sounds/${tone}.mp3`;
+  const audio = new Audio(audioPath);
+  audio.volume = Math.min(1, Math.max(0, volume / 100));
+  activePreviewAudio = audio;
+
+  const scheduleStop = () => {
+    activePreviewTimeout = window.setTimeout(() => {
+      stopSoundPreview();
+    }, durationSeconds * 1000);
+  };
+
+  const playFallback = () => {
+    const fallbackTone = ["classic", "short", "chime"].includes(tone) ? tone : "classic";
+    const blob = createBellWav(fallbackTone, volume, durationSeconds);
+    const objectUrl = URL.createObjectURL(blob);
+    activePreviewObjectUrl = objectUrl;
+    audio.src = objectUrl;
+    audio.play()
+      .then(scheduleStop)
+      .catch((error) => console.error("Sound preview fallback playback failed:", error));
+  };
+
+  audio.play()
+    .then(scheduleStop)
+    .catch(() => {
+      playFallback();
+    });
+}
+
+function formatToneLabel(tone: string) {
+  if (tone === "classic") return "Classic Synthesizer";
+  if (tone === "short") return "Short Beep";
+  if (tone === "chime") return "Recess Chime";
+  return `🎵 ${tone}`;
+}
 
 type ScheduleDraft = Omit<ScheduleEntry, "id">;
 
@@ -242,9 +308,18 @@ export function SchedulePage() {
     updateScheduleEntry,
     deleteScheduleEntry,
     toggleScheduleEntry,
+    availableSounds = [],
+    settings,
   } = useBellSystem();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draft, setDraft] = useState<ScheduleDraft>(emptyDraft);
+  const [previewing, setPreviewing] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      stopSoundPreview();
+    };
+  }, []);
 
   const editing = editingId
     ? schedule.find((entry) => entry.id === editingId) ?? null
@@ -281,6 +356,12 @@ export function SchedulePage() {
       enabled: entry.enabled,
       note: entry.note,
     });
+  }
+
+  function playPreview() {
+    setPreviewing(true);
+    playSoundPreview(draft.tone, settings.bellVolume, settings.bellDuration);
+    setTimeout(() => setPreviewing(false), settings.bellDuration * 1000);
   }
 
   return (
@@ -332,26 +413,54 @@ export function SchedulePage() {
                 />
               </label>
 
-              <label className="block">
-                <span className="text-sm font-medium text-slate-700">Tone</span>
-                <select
-                  value={draft.tone}
-                  onChange={(event) =>
-                    setDraft((current) => ({
-                      ...current,
-                      tone: event.target.value as BellTone,
-                    }))
-                  }
-                  className="mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm capitalize outline-none ring-blue-200 transition focus:border-blue-500 focus:ring-4"
+              <div className="flex items-end gap-2">
+                <label className="block flex-grow">
+                  <span className="text-sm font-medium text-slate-700">Tone</span>
+                  <select
+                    value={draft.tone}
+                    onChange={(event) =>
+                      setDraft((current) => ({
+                        ...current,
+                        tone: event.target.value,
+                      }))
+                    }
+                    className="mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm outline-none ring-blue-200 transition focus:border-blue-500 focus:ring-4"
+                  >
+                    <optgroup label="Built-in Tones">
+                      <option value="classic">Classic Synthesizer</option>
+                      <option value="short">Short Beep</option>
+                      <option value="chime">Recess Chime</option>
+                    </optgroup>
+                    {availableSounds.length > 0 ? (
+                      <optgroup label="Custom Sounds (public/sounds/)">
+                        {availableSounds.map((sound) => (
+                          <option key={sound} value={sound}>
+                            {sound}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ) : null}
+                  </select>
+                </label>
+                <button
+                  type="button"
+                  onClick={playPreview}
+                  className={`rounded-lg border p-2.5 transition shadow-sm h-[42px] flex items-center justify-center gap-1.5 font-semibold text-sm ${
+                    previewing
+                      ? "border-blue-300 bg-blue-50 text-blue-700 animate-pulse"
+                      : "border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+                  }`}
+                  title="Preview selected sound"
                 >
-                  {toneOptions.map((tone) => (
-                    <option key={tone} value={tone}>
-                      {tone}
-                    </option>
-                  ))}
-                </select>
-              </label>
+                  <span>{previewing ? "🔊" : "🔈"}</span>
+                  <span className="hidden xs:inline">{previewing ? "Playing..." : "Preview"}</span>
+                </button>
+              </div>
             </div>
+
+            <p className="text-xs text-slate-500 leading-normal">
+              💡 Put custom MP3/WAV/OGG files in the project's <code>public/sounds/</code> folder to select them here.
+            </p>
 
             <div>
               <p className="text-sm font-medium text-slate-700">Days</p>
@@ -443,8 +552,8 @@ export function SchedulePage() {
                     <td className="py-4 pr-4 text-slate-600">
                       {entry.days.map((day) => dayLabels[day]).join(", ")}
                     </td>
-                    <td className="py-4 pr-4 capitalize text-slate-600">
-                      {entry.tone}
+                    <td className="py-4 pr-4 text-slate-600">
+                      {formatToneLabel(entry.tone)}
                     </td>
                     <td className="py-4 pr-4">
                       <StatusPill enabled={entry.enabled} />
@@ -811,7 +920,7 @@ function MetricCard({
   return (
     <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
       <p className="text-sm font-medium text-slate-500">{label}</p>
-      <p className="mt-3 min-h-9 text-2xl font-semibold tracking-normal text-slate-950">
+      <p className="mt-3 min-h-9 text-2xl font-semibold tracking-normal text-slate-950" suppressHydrationWarning>
         {value}
       </p>
       {detail ? <p className="mt-2 text-sm text-slate-500">{detail}</p> : null}
@@ -877,8 +986,8 @@ function ScheduleStatePill({ label, tone }: { label: string; tone: BellTone }) {
       >
         {label}
       </span>
-      <span className="h-fit rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold capitalize text-slate-600">
-        {tone}
+      <span className="h-fit rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">
+        {formatToneLabel(tone)}
       </span>
     </div>
   );

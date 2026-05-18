@@ -32,6 +32,7 @@ type BellContextValue = {
   storageStatus: string;
   playerStatus: BellSystemSnapshot["playerStatus"];
   hostPlayerOnline: boolean;
+  availableSounds: string[];
   setStatus: (status: BellStatus) => void;
   emergencyStop: () => void;
   ringBell: (entry?: ScheduleEntry, source?: BellSource) => void;
@@ -60,7 +61,7 @@ function createFallbackSnapshot(): BellSystemSnapshot {
 }
 
 export function BellProvider({ children }: { children: React.ReactNode }) {
-  const [currentTime, setCurrentTime] = useState(() => new Date(0));
+  const [currentTime, setCurrentTime] = useState(() => new Date());
   const [snapshot, setSnapshot] = useState<BellSystemSnapshot>(createFallbackSnapshot);
 
   const applySnapshot = useCallback((nextSnapshot: BellSystemSnapshot) => {
@@ -146,6 +147,7 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
       storageStatus: snapshot.storageStatus,
       playerStatus: snapshot.playerStatus,
       hostPlayerOnline,
+      availableSounds: snapshot.availableSounds ?? [],
       setStatus: (status) => {
         void postAction({ type: "set-status", status }).catch((error) => {
           console.error(error);
@@ -230,6 +232,7 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
       snapshot.settings,
       snapshot.status,
       snapshot.storageStatus,
+      snapshot.availableSounds,
     ],
   );
 

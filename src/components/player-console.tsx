@@ -11,6 +11,7 @@ import {
   formatDateTime,
   formatLongTime,
   isPlayerOnline,
+  createBellWav,
 } from "@/lib/bell-data";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -96,7 +97,20 @@ export function PlayerConsole() {
       stopActiveAudio();
       setLastSignalText(`${signal.label} requested at ${formatDateTime(signal.createdAt)}`);
 
-      const audio = new Audio(customBellAudioPath);
+      // Determine audio path based on selected tone
+      const isCustomFile =
+        signal.tone.includes(".") ||
+        signal.tone.endsWith(".mp3") ||
+        signal.tone.endsWith(".wav") ||
+        signal.tone.endsWith(".ogg") ||
+        signal.tone.endsWith(".m4a") ||
+        signal.tone.endsWith(".aac");
+
+      const audioPath = isCustomFile
+        ? `/sounds/${signal.tone}`
+        : `/sounds/${signal.tone}.mp3`; // Try to load custom file for built-in tones if present
+
+      const audio = new Audio(audioPath);
       const volume = Math.min(1, Math.max(0, signal.volume / 100));
       const durationSeconds = Math.max(1, Math.min(60, signal.durationSeconds));
       let triedGeneratedFallback = false;
@@ -117,8 +131,13 @@ export function PlayerConsole() {
         }
 
         triedGeneratedFallback = true;
+        // Fall back to generated sound if it's a built-in tone key
+        const fallbackTone = ["classic", "short", "chime"].includes(signal.tone)
+          ? signal.tone
+          : "classic";
+
         objectUrlRef.current = URL.createObjectURL(
-          createBellWav(signal.tone, signal.volume, durationSeconds),
+          createBellWav(fallbackTone, signal.volume, durationSeconds),
         );
         audio.src = objectUrlRef.current;
         await audio.play();
@@ -446,58 +465,3 @@ function EventRow({
   );
 }
 
-function createBellWav(tone: BellTone, volume: number, durationSeconds: number) {
-  const sampleRate = 44100;
-  const duration = Math.max(1, Math.min(60, durationSeconds));
-  const sampleCount = Math.floor(sampleRate * duration);
-  const dataLength = sampleCount * 2;
-  const buffer = new ArrayBuffer(44 + dataLength);
-  const view = new DataView(buffer);
-  const normalizedVolume = Math.min(1, Math.max(0.05, volume / 100));
-
-  writeString(view, 0, "RIFF");
-  view.setUint32(4, 36 + dataLength, true);
-  writeString(view, 8, "WAVE");
-  writeString(view, 12, "fmt ");
-  view.setUint32(16, 16, true);
-  view.setUint16(20, 1, true);
-  view.setUint16(22, 1, true);
-  view.setUint32(24, sampleRate, true);
-  view.setUint32(28, sampleRate * 2, true);
-  view.setUint16(32, 2, true);
-  view.setUint16(34, 16, true);
-  writeString(view, 36, "data");
-  view.setUint32(40, dataLength, true);
-
-  for (let index = 0; index < sampleCount; index += 1) {
-    const t = index / sampleRate;
-    const envelope = Math.min(1, t * 8) * Math.max(0, 1 - t / duration);
-    const wave = toneWave(t, tone) * envelope * normalizedVolume;
-    view.setInt16(44 + index * 2, Math.max(-1, Math.min(1, wave)) * 0x7fff, true);
-  }
-
-  return new Blob([view], { type: "audio/wav" });
-}
-
-function toneWave(t: number, tone: BellTone) {
-  if (tone === "short") {
-    return Math.sin(2 * Math.PI * 980 * t);
-  }
-
-  if (tone === "chime") {
-    return (
-      Math.sin(2 * Math.PI * 523.25 * t) * 0.45 +
-      Math.sin(2 * Math.PI * 659.25 * t) * 0.35 +
-      Math.sin(2 * Math.PI * 783.99 * t) * 0.2
-    );
-  }
-
-  const pulse = Math.sin(2 * Math.PI * 3.5 * t) > -0.2 ? 1 : 0.35;
-  return Math.sin(2 * Math.PI * 880 * t) * pulse;
-}
-
-function writeString(view: DataView, offset: number, value: string) {
-  for (let index = 0; index < value.length; index += 1) {
-    view.setUint8(offset + index, value.charCodeAt(index));
-  }
-}
