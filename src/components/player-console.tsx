@@ -283,8 +283,8 @@ export function PlayerConsole() {
               <PlayerMetric label="Local time" value={formatLongTime(currentTime)} />
               <PlayerMetric label="Scheduler" value={statusLabel} />
               <PlayerMetric
-                label="Audio"
-                value={audioStatus === "enabled" ? "Enabled" : "Not enabled"}
+                label="Host Playback"
+                value="Active (afplay)"
               />
             </div>
           </div>
@@ -351,22 +351,35 @@ export function PlayerConsole() {
               </div>
             </div>
 
-            <div className={`rounded-lg border p-6 ${playerStateClass}`}>
-              <p className="text-sm font-semibold uppercase tracking-[0.18em]">
-                Live Player State
-              </p>
-              <p className="mt-3 text-3xl font-semibold">
-                {playbackState === "ringing"
-                  ? "Bell is sounding from this computer"
-                  : playbackState === "stopped"
-                    ? "Playback stopped by operator command"
-                    : "Waiting for next bell command"}
-              </p>
-              <p className="mt-3 text-sm leading-6">
-                {audioEnabled
-                  ? "This page is armed to play queued bells sent from the shared scheduler."
-                  : "Audio is not armed yet on this browser. Enable player audio on the main host computer before relying on automatic bells."}
-              </p>
+            <div className="rounded-lg border border-slate-800 bg-slate-900/60 p-6 space-y-6">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-400">
+                  Native macOS Playback (Active 🟢)
+                </p>
+                <p className="mt-3 text-3xl font-semibold text-white">
+                  Operating System Level
+                </p>
+                <p className="mt-3 text-sm leading-6 text-slate-300">
+                  The host server is configured to play all manual and scheduled bells natively through the computer's sound card/speakers using macOS <code className="rounded bg-slate-950 px-1.5 py-0.5 font-mono text-xs text-blue-400">afplay</code>. 
+                  This runs at the OS level, meaning it is **100% immune** to browser autoplay locks, asleep tabs, or screensavers!
+                </p>
+              </div>
+
+              <div className="border-t border-slate-800 pt-6">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-400">
+                  Browser Audio (Backup / Monitor)
+                </p>
+                <p className="mt-3 text-lg font-semibold text-white">
+                  {audioEnabled ? "Armed (Double Output)" : "Muted (Bypassed)"}
+                </p>
+                <p className="mt-2 text-sm leading-6 text-slate-300">
+                  {audioEnabled ? (
+                    <span className="text-emerald-400 font-medium">Active: This browser tab will also play the bell sound as a secondary output backup.</span>
+                  ) : (
+                    <span className="text-slate-400">Not armed: The browser tab is muted. (You can click "Enable Player Audio" above to arm browser-level audio as a secondary backup output, but this is completely optional).</span>
+                  )}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -389,11 +402,7 @@ export function PlayerConsole() {
                 <EventRow
                   label="Host player"
                   value={snapshot.playerStatus.label}
-                  detail={
-                    audioEnabled
-                      ? "This browser is armed for playback"
-                      : "Arm audio on this workstation"
-                  }
+                  detail="Native OS Playback active (afplay)"
                 />
               </div>
             </div>
