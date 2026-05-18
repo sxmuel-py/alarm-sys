@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { dispatchBellAction, getBellSystemSnapshot } from "@/lib/bell-server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const snapshot = await getBellSystemSnapshot();
   return NextResponse.json(snapshot);
