@@ -290,6 +290,46 @@ export function PlayerConsole() {
           </div>
         </header>
 
+        <div className="relative overflow-hidden rounded-lg border border-yellow-600/40 bg-slate-900/85 p-6 shadow-xl backdrop-blur-sm">
+          {/* Top Hazard Tape */}
+          <div 
+            className="absolute top-0 left-0 right-0 h-3"
+            style={{ 
+              backgroundImage: 'repeating-linear-gradient(-45deg, #eab308, #eab308 10px, #0f172a 10px, #0f172a 20px)',
+              backgroundSize: '28px 28px' 
+            }}
+          />
+          
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between pt-2 pb-2">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-yellow-500 text-2xl shadow-md shadow-yellow-500/20">
+                🚧
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold tracking-wide text-yellow-500 uppercase">
+                  Workstation Under Construction
+                </h3>
+                <p className="text-sm text-slate-300 mt-1">
+                  Local background player scheduling is active. Web audio playback optimization upgrades are currently in progress.
+                </p>
+              </div>
+            </div>
+            <div className="inline-flex shrink-0 items-center gap-2 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-3.5 py-1 text-xs font-semibold text-yellow-500 uppercase tracking-wider animate-pulse">
+              <span className="h-1.5 w-1.5 rounded-full bg-yellow-500"></span>
+              Live Tuning Active
+            </div>
+          </div>
+
+          {/* Bottom Hazard Tape */}
+          <div 
+            className="absolute bottom-0 left-0 right-0 h-3"
+            style={{ 
+              backgroundImage: 'repeating-linear-gradient(-45deg, #eab308, #eab308 10px, #0f172a 10px, #0f172a 20px)',
+              backgroundSize: '28px 28px' 
+            }}
+          />
+        </div>
+
         <section className="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_380px]">
           <div className="space-y-6">
             <div className="rounded-lg border border-slate-800 bg-slate-900 p-6">
