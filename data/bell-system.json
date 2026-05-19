@@ -95,6 +95,62 @@
   ],
   "logs": [
     {
+      "id": "16dade29-a23b-452f-9715-749a4eacd4f3",
+      "timestamp": "2026-05-19T13:38:17.855Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "e3c01c48-266a-4af2-bf96-37e5d4dd2b63",
+      "timestamp": "2026-05-19T13:38:11.011Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "5d04e0ce-4377-4705-89a1-a20ca461655e",
+      "timestamp": "2026-05-19T13:38:06.054Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "cc1879e3-6a4f-4aa1-8cc1-8cb3cbcf5671",
+      "timestamp": "2026-05-19T13:38:04.734Z",
+      "source": "system",
+      "message": "Settings updated",
+      "detail": "Audio and school profile saved"
+    },
+    {
+      "id": "2d0d4b63-f3f0-44c8-a0a5-d6bd0d80740f",
+      "timestamp": "2026-05-19T13:34:15.107Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "469a57ad-40dc-40be-9ac4-e61600f5190a",
+      "timestamp": "2026-05-19T13:34:15.102Z",
+      "source": "system",
+      "message": "Settings updated",
+      "detail": "Audio and school profile saved"
+    },
+    {
+      "id": "67402143-a4bd-44a0-acc2-b7c3d0f2814c",
+      "timestamp": "2026-05-19T13:34:10.340Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "a367203e-80db-4777-a433-3f7ae84d25bc",
+      "timestamp": "2026-05-19T13:34:10.335Z",
+      "source": "system",
+      "message": "Settings updated",
+      "detail": "Audio and school profile saved"
+    },
+    {
       "id": "b5032daa-9541-4a64-bff5-1f44cabe3b03",
       "timestamp": "2026-05-19T13:26:50.264Z",
       "source": "system",
@@ -240,7 +296,7 @@
     "bellVolume": 70,
     "bellDuration": 3,
     "autoTriggerWindowSeconds": 45,
-    "manualTone": "classic"
+    "manualTone": "siren_alarm.wav"
   },
   "playerSignals": [
     {
@@ -422,6 +478,66 @@
       "durationSeconds": 3,
       "volume": 70,
       "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "35679c4e-97bb-4b39-9b20-bb27b4bd32cc",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:34:10.340Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "classic_school_bell.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "2b41f403-8b8f-4b9c-b5a9-c5c06a36f7df",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:34:15.107Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "classic_school_bell.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "e0a8d1a5-ba84-40ac-9a76-27a5691587aa",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:38:06.054Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "siren_alarm.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "1f03dc3b-ad8d-4d0b-af6e-98d089668f0b",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:38:11.011Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "siren_alarm.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "1e915ecd-b0cf-472b-a771-dc1147914b92",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:38:17.855Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "siren_alarm.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
     }
   ],
   "triggeredBellKeys": [
@@ -433,7 +549,7 @@
     "2026-05-13|closing"
   ],
   "playerStatus": {
-    "lastSeenAt": "2026-05-19T13:33:51.740Z",
+    "lastSeenAt": "2026-05-19T13:38:36.173Z",
     "audioEnabled": false,
     "label": "Main bell PC"
   }
