@@ -363,6 +363,7 @@ function playSoundOnServer(tone: string, volume: number, durationSeconds: number
 
   if (process.platform === "darwin") {
     try {
+      console.log(`[macOS Player] Spawning afplay for: ${absolutePath}`);
       const processInstance = spawn("afplay", [
         "-v",
         vol.toString(),
@@ -371,10 +372,14 @@ function playSoundOnServer(tone: string, volume: number, durationSeconds: number
         absolutePath,
       ]);
       activePlayProcess = processInstance;
+      processInstance.stderr.on("data", (data) => {
+        console.error("[macOS Player Error]:", data.toString());
+      });
       processInstance.on("error", (err) => {
         console.error("afplay server-side playback failed to spawn:", err);
       });
-      processInstance.on("exit", () => {
+      processInstance.on("exit", (code) => {
+        console.log(`[macOS Player] afplay exited with code ${code}`);
         if (activePlayProcess === processInstance) {
           activePlayProcess = null;
         }
@@ -386,15 +391,23 @@ function playSoundOnServer(tone: string, volume: number, durationSeconds: number
     // On Windows, use PowerShell to play the sound
     const windowsPath = absolutePath.replace(/\//g, "\\");
     try {
+      console.log(`[Windows Player] Spawning powershell to play: ${windowsPath}`);
       const processInstance = spawn("powershell.exe", [
-        "-c",
-        `(New-Object System.Media.SoundPlayer '${windowsPath}').PlaySync()`,
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-Command",
+        `$player = New-Object System.Media.SoundPlayer; $player.SoundLocation = '${windowsPath}'; $player.PlaySync()`,
       ]);
       activePlayProcess = processInstance;
+      processInstance.stderr.on("data", (data) => {
+        console.error("[Windows Player Error]:", data.toString());
+      });
       processInstance.on("error", (err) => {
         console.error("Windows powershell playback failed to spawn:", err);
       });
-      processInstance.on("exit", () => {
+      processInstance.on("exit", (code) => {
+        console.log(`[Windows Player] PowerShell exited with code ${code}`);
         if (activePlayProcess === processInstance) {
           activePlayProcess = null;
         }
@@ -405,14 +418,23 @@ function playSoundOnServer(tone: string, volume: number, durationSeconds: number
   } else {
     // On Linux, try aplay (ALSA) or paplay (PulseAudio)
     try {
+      console.log(`[Linux Player] Spawning aplay for: ${absolutePath}`);
       const processInstance = spawn("aplay", [absolutePath]);
       activePlayProcess = processInstance;
+      processInstance.stderr.on("data", (data) => {
+        console.error("[Linux Player Error]:", data.toString());
+      });
       processInstance.on("error", () => {
         // Fallback to paplay if aplay fails
         try {
+          console.log(`[Linux Player] aplay failed, falling back to paplay...`);
           const fallbackInstance = spawn("paplay", [absolutePath]);
           activePlayProcess = fallbackInstance;
-          fallbackInstance.on("exit", () => {
+          fallbackInstance.stderr.on("data", (data) => {
+            console.error("[Linux Player Error (paplay)]:", data.toString());
+          });
+          fallbackInstance.on("exit", (code) => {
+            console.log(`[Linux Player] paplay exited with code ${code}`);
             if (activePlayProcess === fallbackInstance) {
               activePlayProcess = null;
             }
@@ -421,7 +443,8 @@ function playSoundOnServer(tone: string, volume: number, durationSeconds: number
           console.error("Linux paplay spawn error:", err);
         }
       });
-      processInstance.on("exit", () => {
+      processInstance.on("exit", (code) => {
+        console.log(`[Linux Player] aplay exited with code ${code}`);
         if (activePlayProcess === processInstance) {
           activePlayProcess = null;
         }
