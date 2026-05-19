@@ -95,6 +95,174 @@
   ],
   "logs": [
     {
+      "id": "75c8d475-667e-4bb8-89b7-8ab42fc1a265",
+      "timestamp": "2026-05-19T13:51:01.286Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "def2d0ab-1b05-400e-bf29-0e34e0264869",
+      "timestamp": "2026-05-19T13:50:57.691Z",
+      "source": "system",
+      "message": "Settings updated",
+      "detail": "Audio and school profile saved"
+    },
+    {
+      "id": "566ba655-1c46-48ff-8ac2-401116716179",
+      "timestamp": "2026-05-19T13:50:56.727Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "6fb42c19-f7f5-4da1-9db6-9203cf3ad3aa",
+      "timestamp": "2026-05-19T13:50:52.638Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "a683522a-da00-4bd6-91a3-9485c0c259d2",
+      "timestamp": "2026-05-19T13:50:45.531Z",
+      "source": "system",
+      "message": "Settings updated",
+      "detail": "Audio and school profile saved"
+    },
+    {
+      "id": "c4edd567-0758-406c-a859-c3aaec633664",
+      "timestamp": "2026-05-19T13:50:31.895Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "83858610-922a-4250-94fb-d7f96ee39dc0",
+      "timestamp": "2026-05-19T13:47:18.225Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "f933a7ba-1a7f-405f-b9fc-628553362821",
+      "timestamp": "2026-05-19T13:47:18.022Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "e9bb0e36-1412-4e06-96f2-11b06a63d69e",
+      "timestamp": "2026-05-19T13:47:17.856Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "8184b845-754e-40c6-ae1b-86fa92fa5d61",
+      "timestamp": "2026-05-19T13:47:17.647Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "fa7e64fd-618f-47a9-ad00-d1641b2231b7",
+      "timestamp": "2026-05-19T13:47:15.557Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "87c33300-2019-4344-9777-d5117abbf583",
+      "timestamp": "2026-05-19T13:47:14.056Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "3d41a831-6fcb-4e23-8eb7-daf42d32003e",
+      "timestamp": "2026-05-19T13:47:13.874Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "a10527e1-e62c-47cc-893a-ded5c1578ec0",
+      "timestamp": "2026-05-19T13:47:13.706Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "017ba041-c361-4899-8398-dc27e6665193",
+      "timestamp": "2026-05-19T13:47:13.533Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "73a66894-6ac2-4558-994c-995485cdabbd",
+      "timestamp": "2026-05-19T13:47:11.710Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "a833f06d-3ebe-4564-bc2d-7a845083286b",
+      "timestamp": "2026-05-19T13:47:11.508Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "ce83a405-021f-4814-8b79-eca6178be9be",
+      "timestamp": "2026-05-19T13:47:11.323Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "e81b17f2-5c3c-4b20-a623-fc072d4614a1",
+      "timestamp": "2026-05-19T13:47:11.162Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "624d488f-2d46-420a-becc-02c4b43b3937",
+      "timestamp": "2026-05-19T13:47:10.833Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "cb7fda25-06d5-40a2-92a7-35cad657630c",
+      "timestamp": "2026-05-19T13:47:07.988Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "cad6d1ac-c3d3-4469-add7-b10e2f4e3567",
+      "timestamp": "2026-05-19T13:47:04.837Z",
+      "source": "system",
+      "message": "Settings updated",
+      "detail": "Audio and school profile saved"
+    },
+    {
+      "id": "309e6118-b0f8-48c8-aa5b-e15c97093872",
+      "timestamp": "2026-05-19T13:47:02.484Z",
+      "source": "system",
+      "message": "Settings updated",
+      "detail": "Audio and school profile saved"
+    },
+    {
+      "id": "fe8e65a1-84c4-4882-86f9-e53eb5658757",
+      "timestamp": "2026-05-19T13:40:00.185Z",
+      "source": "automatic",
+      "message": "Closing bell bell triggered",
+      "detail": "14:40 scheduled bell"
+    },
+    {
       "id": "16dade29-a23b-452f-9715-749a4eacd4f3",
       "timestamp": "2026-05-19T13:38:17.855Z",
       "source": "manual",
@@ -296,7 +464,7 @@
     "bellVolume": 70,
     "bellDuration": 3,
     "autoTriggerWindowSeconds": 45,
-    "manualTone": "siren_alarm.wav"
+    "manualTone": "recess_chime.wav"
   },
   "playerSignals": [
     {
@@ -538,6 +706,246 @@
       "durationSeconds": 3,
       "volume": 70,
       "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "44f738cb-bcb5-41a1-b938-69ad94b86e91",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:40:00.185Z",
+      "source": "automatic",
+      "entryId": "closing",
+      "label": "Closing bell",
+      "tone": "classic",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "14:40 scheduled bell"
+    },
+    {
+      "id": "93e604c7-94a3-4b20-a0a3-b024ebf52f22",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:47:07.988Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "1bf84d9f-27e0-4167-88b8-3e43cf55507a",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:47:10.833Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "6e38babf-29c3-47d2-97bc-37693f41b08f",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:47:11.162Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "7ad21151-bed3-4840-b442-1d35e320f027",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:47:11.323Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "0af6a841-789e-472c-83f5-79466186841a",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:47:11.508Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "a10e6d75-1af9-4d81-b8eb-207fd58c7b2d",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:47:11.710Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "10eb350f-5629-4690-92dc-73aeeb4f3d21",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:47:13.533Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "151b8ee8-bb5a-409e-b6b5-89ed356d640b",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:47:13.706Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "fa5277ec-39df-44bb-99ef-296693e08912",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:47:13.874Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "1aa7d9e8-217c-479c-ba72-69fe58d6349f",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:47:14.056Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "48b1f17e-7cbe-45e7-8a4f-23ded809e069",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:47:15.557Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "36a7d162-8361-4949-91aa-87a0031a8655",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:47:17.647Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "3a674a71-2779-461f-b592-8b367bf89991",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:47:17.856Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "02adcc4d-d6fb-4959-ad2f-5c03a940f1bb",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:47:18.022Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "57c4f7f0-5a6a-4da9-bab6-502b94654d3e",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:47:18.224Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "16027a34-8310-48e0-af81-1da773324005",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:50:31.894Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "2bf9ed23-1c5e-452c-af11-3a38e8d2eab8",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:50:52.638Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "classic_school_bell.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "be351eb7-153e-4bef-bca8-d17fc6cd104a",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:50:56.727Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "9526dc4d-ac73-422f-a910-21deb498a47b",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:51:01.286Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "recess_chime.wav",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
     }
   ],
   "triggeredBellKeys": [
@@ -546,10 +954,11 @@
     "2026-05-13|break",
     "2026-05-13|resume",
     "2026-05-13|lunch",
-    "2026-05-13|closing"
+    "2026-05-13|closing",
+    "2026-05-19|closing"
   ],
   "playerStatus": {
-    "lastSeenAt": "2026-05-19T13:38:36.173Z",
+    "lastSeenAt": "2026-05-19T13:52:49.667Z",
     "audioEnabled": false,
     "label": "Main bell PC"
   }
