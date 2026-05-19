@@ -34,7 +34,14 @@ type BellSystemStore = {
 type BellAction =
   | { type: "set-status"; status: BellStatus }
   | { type: "emergency-stop" }
-  | { type: "ring-bell"; entryId: string | null; source: BellSource }
+  | {
+      type: "ring-bell";
+      entryId: string | null;
+      source: BellSource;
+      tone?: string;
+      volume?: number;
+      durationSeconds?: number;
+    }
   | { type: "add-schedule-entry"; entry: Omit<ScheduleEntry, "id"> }
   | { type: "update-schedule-entry"; id: string; entry: Omit<ScheduleEntry, "id"> }
   | { type: "delete-schedule-entry"; id: string }
@@ -413,9 +420,15 @@ function queueRingSignal(
   entry: ScheduleEntry | null,
   source: BellSource,
   detail: string,
+  overrideTone?: string,
+  overrideVolume?: number,
+  overrideDurationSeconds?: number,
 ) {
   const label = entry?.label ?? "Manual override";
-  const tone = entry?.tone ?? store.settings.manualTone ?? "classic";
+  const tone = overrideTone ?? entry?.tone ?? store.settings.manualTone ?? "classic";
+  const durationSeconds = overrideDurationSeconds ?? store.settings.bellDuration;
+  const volume = overrideVolume ?? store.settings.bellVolume;
+
   const signal: PlayerSignal = {
     id: crypto.randomUUID(),
     type: "ring",
@@ -424,8 +437,8 @@ function queueRingSignal(
     entryId: entry?.id ?? null,
     label,
     tone,
-    durationSeconds: store.settings.bellDuration,
-    volume: store.settings.bellVolume,
+    durationSeconds,
+    volume,
     detail,
   };
 
@@ -433,7 +446,7 @@ function queueRingSignal(
   writeLog(store, source, `${label} bell triggered`, detail);
 
   // Play natively on the host Mac server so it sounds directly from the server computer
-  playSoundOnServer(tone, store.settings.bellVolume, store.settings.bellDuration);
+  playSoundOnServer(tone, volume, durationSeconds);
 }
 
 function queueStopSignal(store: BellSystemStore, reason: string) {
@@ -576,7 +589,15 @@ export async function dispatchBellAction(action: BellAction) {
           action.source === "automatic"
             ? `${entry?.time ?? "--:--"} scheduled bell`
             : "Triggered from dashboard control";
-        queueRingSignal(store, entry, action.source, detail);
+        queueRingSignal(
+          store,
+          entry,
+          action.source,
+          detail,
+          action.tone,
+          action.volume,
+          action.durationSeconds,
+        );
         break;
       }
       case "add-schedule-entry": {

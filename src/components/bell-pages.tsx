@@ -814,8 +814,11 @@ export function SettingsPage() {
               <button
                 type="button"
                 onClick={() => {
-                  updateSettings(draft);
-                  ringBell();
+                  ringBell(null, "manual", {
+                    tone: draft.manualTone,
+                    volume: draft.bellVolume,
+                    durationSeconds: draft.bellDuration,
+                  });
                 }}
                 className="rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
               >

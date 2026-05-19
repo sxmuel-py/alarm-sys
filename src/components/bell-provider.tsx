@@ -35,7 +35,11 @@ type BellContextValue = {
   availableSounds: string[];
   setStatus: (status: BellStatus) => void;
   emergencyStop: () => void;
-  ringBell: (entry?: ScheduleEntry, source?: BellSource) => void;
+  ringBell: (
+    entry?: ScheduleEntry | null,
+    source?: BellSource,
+    options?: { tone?: string; volume?: number; durationSeconds?: number },
+  ) => void;
   addScheduleEntry: (entry: Omit<ScheduleEntry, "id">) => void;
   updateScheduleEntry: (id: string, entry: Omit<ScheduleEntry, "id">) => void;
   deleteScheduleEntry: (id: string) => void;
@@ -158,7 +162,7 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
           console.error(error);
         });
       },
-      ringBell: (entry, source = "manual") => {
+      ringBell: (entry, source = "manual", options = {}) => {
         if (
           snapshot.status === "emergency-stopped" &&
           source === "manual" &&
@@ -173,6 +177,9 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
           type: "ring-bell",
           entryId: entry?.id ?? null,
           source,
+          tone: options.tone,
+          volume: options.volume,
+          durationSeconds: options.durationSeconds,
         }).catch((error) => {
           console.error(error);
         });
