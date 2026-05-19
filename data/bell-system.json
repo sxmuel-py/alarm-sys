@@ -1,0 +1,316 @@
+{
+  "version": 1,
+  "status": "active",
+  "schedule": [
+    {
+      "id": "assembly",
+      "label": "Morning assembly",
+      "time": "07:45",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "classic",
+      "enabled": true,
+      "note": "Start of day"
+    },
+    {
+      "id": "period-1",
+      "label": "Period 1 begins",
+      "time": "08:10",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "short",
+      "enabled": true,
+      "note": "Academic block"
+    },
+    {
+      "id": "break",
+      "label": "Morning break",
+      "time": "10:30",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "chime",
+      "enabled": true,
+      "note": "Student recess"
+    },
+    {
+      "id": "resume",
+      "label": "Classes resume",
+      "time": "10:50",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "short",
+      "enabled": true,
+      "note": "Return from break"
+    },
+    {
+      "id": "lunch",
+      "label": "Lunch bell",
+      "time": "12:35",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "chime",
+      "enabled": true,
+      "note": "Lunch interval"
+    },
+    {
+      "id": "closing",
+      "label": "Closing bell",
+      "time": "14:40",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "classic",
+      "enabled": true,
+      "note": "End of school day"
+    }
+  ],
+  "logs": [
+    {
+      "id": "2c8479da-b9e2-48e9-8264-731af219081e",
+      "timestamp": "2026-05-18T21:07:07.833Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "2042adc4-b99a-4774-ac54-3391741691d4",
+      "timestamp": "2026-05-18T20:37:44.816Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "57d42d48-c96f-462b-9579-6923d6ac9152",
+      "timestamp": "2026-05-13T13:40:00.224Z",
+      "source": "automatic",
+      "message": "Closing bell bell triggered",
+      "detail": "14:40 scheduled bell"
+    },
+    {
+      "id": "e22e067a-de58-41a8-84e3-fbc39c7bb672",
+      "timestamp": "2026-05-13T11:35:01.924Z",
+      "source": "automatic",
+      "message": "Lunch bell bell triggered",
+      "detail": "12:35 scheduled bell"
+    },
+    {
+      "id": "3a7b287a-2dac-4da0-83a6-8c31d75c8476",
+      "timestamp": "2026-05-13T09:50:00.030Z",
+      "source": "automatic",
+      "message": "Classes resume bell triggered",
+      "detail": "10:50 scheduled bell"
+    },
+    {
+      "id": "834be587-f170-44de-9162-529a9fc8d366",
+      "timestamp": "2026-05-13T09:30:01.893Z",
+      "source": "automatic",
+      "message": "Morning break bell triggered",
+      "detail": "10:30 scheduled bell"
+    },
+    {
+      "id": "8268b443-b44b-4083-b466-1b3fc4dc1966",
+      "timestamp": "2026-05-13T07:10:01.413Z",
+      "source": "automatic",
+      "message": "Period 1 begins bell triggered",
+      "detail": "08:10 scheduled bell"
+    },
+    {
+      "id": "e3cb35df-3e36-4f58-9d32-ef0a62c7fc0c",
+      "timestamp": "2026-05-13T06:45:02.054Z",
+      "source": "automatic",
+      "message": "Morning assembly bell triggered",
+      "detail": "07:45 scheduled bell"
+    },
+    {
+      "id": "d0752096-4e95-4bc5-b121-f7083c58b481",
+      "timestamp": "2026-05-12T19:48:43.897Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "34de4f8d-ed15-4736-81e1-50b58a99e42f",
+      "timestamp": "2026-05-12T19:48:43.297Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "86ec7b62-a9ea-4c9d-a82f-5ccd6b3b3dee",
+      "timestamp": "2026-05-12T14:22:13.092Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    }
+  ],
+  "settings": {
+    "schoolName": "Childrens International school Lekki",
+    "bellVolume": 70,
+    "bellDuration": 3,
+    "autoTriggerWindowSeconds": 45
+  },
+  "playerSignals": [
+    {
+      "id": "dd6e400c-7056-4ace-880a-32c6224ade1b",
+      "type": "ring",
+      "createdAt": "2026-05-12T19:48:43.297Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "classic",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "65b5b35f-1aa7-4b4a-979a-9f63cf6b0503",
+      "type": "ring",
+      "createdAt": "2026-05-12T19:48:43.897Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "classic",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "287cb4e9-91be-42a2-b064-5285436c0ce6",
+      "type": "ring",
+      "createdAt": "2026-05-13T06:45:02.054Z",
+      "source": "automatic",
+      "entryId": "assembly",
+      "label": "Morning assembly",
+      "tone": "classic",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "07:45 scheduled bell"
+    },
+    {
+      "id": "ec233db4-e874-4964-bb25-7af17c276cdc",
+      "type": "ring",
+      "createdAt": "2026-05-13T07:10:01.413Z",
+      "source": "automatic",
+      "entryId": "period-1",
+      "label": "Period 1 begins",
+      "tone": "short",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "08:10 scheduled bell"
+    },
+    {
+      "id": "f4c397f0-a404-4cd4-b1f4-08db256a9da9",
+      "type": "ring",
+      "createdAt": "2026-05-13T09:30:01.893Z",
+      "source": "automatic",
+      "entryId": "break",
+      "label": "Morning break",
+      "tone": "chime",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "10:30 scheduled bell"
+    },
+    {
+      "id": "81a321d4-4062-4637-800a-30bc016c6861",
+      "type": "ring",
+      "createdAt": "2026-05-13T09:50:00.030Z",
+      "source": "automatic",
+      "entryId": "resume",
+      "label": "Classes resume",
+      "tone": "short",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "10:50 scheduled bell"
+    },
+    {
+      "id": "a479bcb6-4a48-4423-ab6b-92042e8acdc6",
+      "type": "ring",
+      "createdAt": "2026-05-13T11:35:01.924Z",
+      "source": "automatic",
+      "entryId": "lunch",
+      "label": "Lunch bell",
+      "tone": "chime",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "12:35 scheduled bell"
+    },
+    {
+      "id": "6c5fbd5b-8f8e-4474-9307-c50a00df1df8",
+      "type": "ring",
+      "createdAt": "2026-05-13T13:40:00.224Z",
+      "source": "automatic",
+      "entryId": "closing",
+      "label": "Closing bell",
+      "tone": "classic",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "14:40 scheduled bell"
+    },
+    {
+      "id": "282d415b-dc25-4a6e-a563-c1cce0c18dbc",
+      "type": "ring",
+      "createdAt": "2026-05-18T20:37:44.816Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "classic",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "73ea806f-c1ca-49d2-827f-4dcee35fbb7b",
+      "type": "ring",
+      "createdAt": "2026-05-18T21:07:07.833Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "classic",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    }
+  ],
+  "triggeredBellKeys": [
+    "2026-05-13|assembly",
+    "2026-05-13|period-1",
+    "2026-05-13|break",
+    "2026-05-13|resume",
+    "2026-05-13|lunch",
+    "2026-05-13|closing"
+  ],
+  "playerStatus": {
+    "lastSeenAt": "2026-05-19T06:20:29.565Z",
+    "audioEnabled": false,
+    "label": "Main bell PC"
+  }
+}
