@@ -362,24 +362,26 @@ function playSoundOnServer(tone: string, volume: number, durationSeconds: number
   const vol = Math.min(1, Math.max(0, volume / 100));
 
   if (process.platform === "darwin") {
-    // On macOS, kill any lingering afplay processes and spawn afplay directly
-    exec("killall afplay 2>/dev/null || true", () => {
-      try {
-        const processInstance = spawn("afplay", [
-          "-v",
-          vol.toString(),
-          "-t",
-          durationSeconds.toString(),
-          absolutePath,
-        ]);
-        activePlayProcess = processInstance;
-        processInstance.on("error", (err) => {
-          console.error("afplay server-side playback failed to spawn:", err);
-        });
-      } catch (err) {
-        console.error("afplay spawn error:", err);
-      }
-    });
+    try {
+      const processInstance = spawn("afplay", [
+        "-v",
+        vol.toString(),
+        "-t",
+        durationSeconds.toString(),
+        absolutePath,
+      ]);
+      activePlayProcess = processInstance;
+      processInstance.on("error", (err) => {
+        console.error("afplay server-side playback failed to spawn:", err);
+      });
+      processInstance.on("exit", () => {
+        if (activePlayProcess === processInstance) {
+          activePlayProcess = null;
+        }
+      });
+    } catch (err) {
+      console.error("afplay spawn error:", err);
+    }
   } else if (process.platform === "win32") {
     // On Windows, use PowerShell to play the sound
     const windowsPath = absolutePath.replace(/\//g, "\\");
@@ -391,6 +393,11 @@ function playSoundOnServer(tone: string, volume: number, durationSeconds: number
       activePlayProcess = processInstance;
       processInstance.on("error", (err) => {
         console.error("Windows powershell playback failed to spawn:", err);
+      });
+      processInstance.on("exit", () => {
+        if (activePlayProcess === processInstance) {
+          activePlayProcess = null;
+        }
       });
     } catch (err) {
       console.error("Windows play spawn error:", err);
@@ -405,8 +412,18 @@ function playSoundOnServer(tone: string, volume: number, durationSeconds: number
         try {
           const fallbackInstance = spawn("paplay", [absolutePath]);
           activePlayProcess = fallbackInstance;
+          fallbackInstance.on("exit", () => {
+            if (activePlayProcess === fallbackInstance) {
+              activePlayProcess = null;
+            }
+          });
         } catch (err) {
           console.error("Linux paplay spawn error:", err);
+        }
+      });
+      processInstance.on("exit", () => {
+        if (activePlayProcess === processInstance) {
+          activePlayProcess = null;
         }
       });
     } catch (err) {

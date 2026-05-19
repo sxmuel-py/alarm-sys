@@ -15,7 +15,7 @@ import {
   createBellWav,
 } from "@/lib/bell-data";
 import Link from "next/link";
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState, useRef } from "react";
 
 const weekdays = [1, 2, 3, 4, 5];
 
@@ -679,10 +679,16 @@ export function SettingsPage() {
     availableSounds = [],
   } = useBellSystem();
   const [draft, setDraft] = useState(settings);
+  const lastSavedSettingsRef = useRef(settings);
 
   useEffect(() => {
-    window.queueMicrotask(() => setDraft(settings));
-  }, [settings]);
+    if (JSON.stringify(settings) !== JSON.stringify(lastSavedSettingsRef.current)) {
+      if (JSON.stringify(draft) === JSON.stringify(lastSavedSettingsRef.current)) {
+        setDraft(settings);
+      }
+      lastSavedSettingsRef.current = settings;
+    }
+  }, [settings, draft]);
 
   function submitSettings(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
