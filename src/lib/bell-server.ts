@@ -1,8 +1,8 @@
 import "server-only";
 
-import { promises as fs } from "node:fs";
+import { promises as fs, existsSync } from "node:fs";
 import path from "node:path";
-import { exec } from "node:child_process";
+import { exec, spawn, ChildProcess } from "node:child_process";
 import {
   BellLog,
   BellSettings,
@@ -277,46 +277,131 @@ function writeLog(store: BellSystemStore, source: BellSource, message: string, d
   ].slice(0, 200);
 }
 
-function playSoundOnServer(tone: string, volume: number, durationSeconds: number) {
-  if (process.platform !== "darwin") {
-    return;
+let activePlayProcess: ChildProcess | null = null;
+
+function resolveAudioPath(relativePath: string): string {
+  // 1. Try process.cwd()
+  let testPath = path.join(process.cwd(), relativePath);
+  if (existsSync(testPath)) {
+    return testPath;
   }
 
-  // Kill any running afplay processes first to avoid overlapping audio
-  exec("killall afplay", () => {
-    // Determine path to the audio file
-    const isCustomFile =
-      tone.includes(".") ||
-      tone.endsWith(".mp3") ||
-      tone.endsWith(".wav") ||
-      tone.endsWith(".ogg") ||
-      tone.endsWith(".m4a") ||
-      tone.endsWith(".aac");
-
-    let relativePath = "";
-    if (isCustomFile) {
-      relativePath = `public/sounds/${tone}`;
-    } else {
-      // Map built-in tone keys to their generated files
-      if (tone === "short") {
-        relativePath = "public/sounds/short_beep.wav";
-      } else if (tone === "chime") {
-        relativePath = "public/sounds/recess_chime.wav";
-      } else {
-        relativePath = "public/sounds/classic_school_bell.wav";
-      }
+  // 2. Try looking in parent directories of process.cwd()
+  let currentDir = process.cwd();
+  for (let i = 0; i < 4; i++) {
+    const parent = path.dirname(currentDir);
+    if (parent === currentDir) break;
+    currentDir = parent;
+    testPath = path.join(currentDir, relativePath);
+    if (existsSync(testPath)) {
+      return testPath;
     }
+  }
 
-    const absolutePath = path.join(process.cwd(), relativePath);
-    const vol = Math.min(1, Math.max(0, volume / 100));
+  // 3. Try looking in subdirectories of process.cwd() (if started from parent folder)
+  testPath = path.join(process.cwd(), "New project 3", relativePath);
+  if (existsSync(testPath)) {
+    return testPath;
+  }
 
-    // Play sound natively using afplay with volume and duration limits
-    exec(`afplay -v ${vol} -t ${durationSeconds} "${absolutePath}"`, (error) => {
-      if (error && !error.killed) {
-        console.error("afplay server-side playback failed:", error);
+  testPath = path.join(process.cwd(), "alarm-sys", relativePath);
+  if (existsSync(testPath)) {
+    return testPath;
+  }
+
+  // Fallback to process.cwd() path
+  return path.join(process.cwd(), relativePath);
+}
+
+function playSoundOnServer(tone: string, volume: number, durationSeconds: number) {
+  // Kill any currently playing process first to avoid overlapping audio
+  if (activePlayProcess) {
+    try {
+      activePlayProcess.kill();
+    } catch (e) {
+      console.error("Failed to kill active playback process:", e);
+    }
+    activePlayProcess = null;
+  }
+
+  // Determine path to the audio file
+  const isCustomFile =
+    tone.includes(".") ||
+    tone.endsWith(".mp3") ||
+    tone.endsWith(".wav") ||
+    tone.endsWith(".ogg") ||
+    tone.endsWith(".m4a") ||
+    tone.endsWith(".aac");
+
+  let relativePath = "";
+  if (isCustomFile) {
+    relativePath = `public/sounds/${tone}`;
+  } else {
+    // Map built-in tone keys to their generated files
+    if (tone === "short") {
+      relativePath = "public/sounds/short_beep.wav";
+    } else if (tone === "chime") {
+      relativePath = "public/sounds/recess_chime.wav";
+    } else {
+      relativePath = "public/sounds/classic_school_bell.wav";
+    }
+  }
+
+  const absolutePath = resolveAudioPath(relativePath);
+  const vol = Math.min(1, Math.max(0, volume / 100));
+
+  if (process.platform === "darwin") {
+    // On macOS, kill any lingering afplay processes and spawn afplay directly
+    exec("killall afplay 2>/dev/null || true", () => {
+      try {
+        const processInstance = spawn("afplay", [
+          "-v",
+          vol.toString(),
+          "-t",
+          durationSeconds.toString(),
+          absolutePath,
+        ]);
+        activePlayProcess = processInstance;
+        processInstance.on("error", (err) => {
+          console.error("afplay server-side playback failed to spawn:", err);
+        });
+      } catch (err) {
+        console.error("afplay spawn error:", err);
       }
     });
-  });
+  } else if (process.platform === "win32") {
+    // On Windows, use PowerShell to play the sound
+    const windowsPath = absolutePath.replace(/\//g, "\\");
+    try {
+      const processInstance = spawn("powershell.exe", [
+        "-c",
+        `(New-Object System.Media.SoundPlayer '${windowsPath}').PlaySync()`,
+      ]);
+      activePlayProcess = processInstance;
+      processInstance.on("error", (err) => {
+        console.error("Windows powershell playback failed to spawn:", err);
+      });
+    } catch (err) {
+      console.error("Windows play spawn error:", err);
+    }
+  } else {
+    // On Linux, try aplay (ALSA) or paplay (PulseAudio)
+    try {
+      const processInstance = spawn("aplay", [absolutePath]);
+      activePlayProcess = processInstance;
+      processInstance.on("error", () => {
+        // Fallback to paplay if aplay fails
+        try {
+          const fallbackInstance = spawn("paplay", [absolutePath]);
+          activePlayProcess = fallbackInstance;
+        } catch (err) {
+          console.error("Linux paplay spawn error:", err);
+        }
+      });
+    } catch (err) {
+      console.error("Linux play spawn error:", err);
+    }
+  }
 }
 
 function queueRingSignal(
@@ -348,8 +433,17 @@ function queueRingSignal(
 }
 
 function queueStopSignal(store: BellSystemStore, reason: string) {
+  if (activePlayProcess) {
+    try {
+      activePlayProcess.kill();
+    } catch (e) {
+      console.error("Failed to kill active playback process on stop signal:", e);
+    }
+    activePlayProcess = null;
+  }
+
   if (process.platform === "darwin") {
-    exec("killall afplay", () => {});
+    exec("killall afplay 2>/dev/null || true", () => {});
   }
   store.playerSignals = [
     {
