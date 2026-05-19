@@ -388,7 +388,7 @@ function playSoundOnServer(tone: string, volume: number, durationSeconds: number
       console.error("afplay spawn error:", err);
     }
   } else if (process.platform === "win32") {
-    // On Windows, use PowerShell to play the sound
+    // On Windows, use PowerShell system.windows.media.mediaplayer to play both MP3 and WAV files with volume control
     const windowsPath = absolutePath.replace(/\//g, "\\");
     try {
       console.log(`[Windows Player] Spawning powershell to play: ${windowsPath}`);
@@ -397,7 +397,7 @@ function playSoundOnServer(tone: string, volume: number, durationSeconds: number
         "-ExecutionPolicy",
         "Bypass",
         "-Command",
-        `$player = New-Object System.Media.SoundPlayer; $player.SoundLocation = '${windowsPath}'; $player.PlaySync()`,
+        `Add-Type -AssemblyName presentationCore; $player = New-Object system.windows.media.mediaplayer; $player.open('${windowsPath}'); $player.Volume = ${vol}; $player.Play(); Start-Sleep -Seconds ${durationSeconds}`,
       ]);
       activePlayProcess = processInstance;
       processInstance.stderr.on("data", (data) => {
