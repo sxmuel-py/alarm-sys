@@ -109,6 +109,7 @@ export function DashboardPage() {
     schedule,
     logs,
     ringBell,
+    settings,
   } = useBellSystem();
   const operational = getTodaysOperationalSchedule(schedule, currentTime);
   const nextBell = operational.next;
@@ -135,7 +136,13 @@ export function DashboardPage() {
           <>
             <button
               type="button"
-              onClick={() => ringBell()}
+              onClick={() => {
+                ringBell(null, "manual", {
+                  tone: settings.manualTone,
+                  volume: settings.bellVolume,
+                  durationSeconds: settings.bellDuration,
+                });
+              }}
               className="rounded-lg bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-800"
             >
               Ring Bell Now
