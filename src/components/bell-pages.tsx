@@ -676,6 +676,7 @@ export function SettingsPage() {
     playerStatus,
     hostPlayerOnline,
     storageStatus,
+    availableSounds = [],
   } = useBellSystem();
   const [draft, setDraft] = useState(settings);
 
@@ -769,6 +770,37 @@ export function SettingsPage() {
                 <option value={30}>30 seconds</option>
                 <option value={45}>45 seconds</option>
                 <option value={60}>60 seconds</option>
+              </select>
+            </label>
+
+            <label className="block">
+              <span className="text-sm font-medium text-slate-700">
+                Manual Bell Tone
+              </span>
+              <select
+                value={draft.manualTone}
+                onChange={(event) =>
+                  setDraft((current) => ({
+                    ...current,
+                    manualTone: event.target.value,
+                  }))
+                }
+                className="mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm outline-none ring-blue-200 transition focus:border-blue-500 focus:ring-4"
+              >
+                <optgroup label="Built-in Tones">
+                  <option value="classic">Classic Synthesizer</option>
+                  <option value="short">Short Beep</option>
+                  <option value="chime">Recess Chime</option>
+                </optgroup>
+                {availableSounds.length > 0 ? (
+                  <optgroup label="Custom Sounds (public/sounds/)">
+                    {availableSounds.map((sound) => (
+                      <option key={sound} value={sound}>
+                        {sound}
+                      </option>
+                    ))}
+                  </optgroup>
+                ) : null}
               </select>
             </label>
 

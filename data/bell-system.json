@@ -95,6 +95,69 @@
   ],
   "logs": [
     {
+      "id": "b5032daa-9541-4a64-bff5-1f44cabe3b03",
+      "timestamp": "2026-05-19T13:26:50.264Z",
+      "source": "system",
+      "message": "Settings updated",
+      "detail": "Audio and school profile saved"
+    },
+    {
+      "id": "2bef6c5e-387d-45a4-9176-63b40925a277",
+      "timestamp": "2026-05-19T13:25:29.626Z",
+      "source": "system",
+      "message": "Settings updated",
+      "detail": "Audio and school profile saved"
+    },
+    {
+      "id": "6d1baffe-eff3-4fea-be9e-0a23f51db053",
+      "timestamp": "2026-05-19T13:24:21.241Z",
+      "source": "system",
+      "message": "Settings updated",
+      "detail": "Audio and school profile saved"
+    },
+    {
+      "id": "5c71434a-5a6a-4203-a8b7-3f1d8f536f7d",
+      "timestamp": "2026-05-19T13:24:05.720Z",
+      "source": "system",
+      "message": "Settings updated",
+      "detail": "Audio and school profile saved"
+    },
+    {
+      "id": "7e299b30-f366-4bee-b04a-027a052b561d",
+      "timestamp": "2026-05-19T13:13:47.814Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "5baab54f-431f-4b31-a1f6-0b54ad9cf33e",
+      "timestamp": "2026-05-19T13:10:42.614Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "9e227a58-abbc-42ab-839d-f69fc80c0467",
+      "timestamp": "2026-05-19T13:09:11.220Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "74fb2cd7-ab39-481a-98c2-7a4196d1fa38",
+      "timestamp": "2026-05-19T13:08:55.396Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "7c025988-de0f-442a-a01d-ab43baff52ec",
+      "timestamp": "2026-05-19T13:05:38.938Z",
+      "source": "manual",
+      "message": "Manual override bell triggered",
+      "detail": "Triggered from dashboard control"
+    },
+    {
       "id": "2c8479da-b9e2-48e9-8264-731af219081e",
       "timestamp": "2026-05-18T21:07:07.833Z",
       "source": "manual",
@@ -176,7 +239,8 @@
     "schoolName": "Childrens International school Lekki",
     "bellVolume": 70,
     "bellDuration": 3,
-    "autoTriggerWindowSeconds": 45
+    "autoTriggerWindowSeconds": 45,
+    "manualTone": "classic"
   },
   "playerSignals": [
     {
@@ -298,6 +362,66 @@
       "durationSeconds": 3,
       "volume": 70,
       "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "df4ee992-26c7-46db-838b-129e3805467c",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:05:38.938Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "classic",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "6ee8afd4-bdb0-437d-92ac-d0af78b79df3",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:08:55.396Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "classic",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "8593771a-68b1-430b-94d9-c88d4e8f5377",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:09:11.220Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "classic",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "91485a93-c666-4c8f-80d1-b3f3e176fb2e",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:10:42.612Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "classic",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
+    },
+    {
+      "id": "4c1e7293-182f-4a8f-b71c-ec28cda5891e",
+      "type": "ring",
+      "createdAt": "2026-05-19T13:13:47.814Z",
+      "source": "manual",
+      "entryId": null,
+      "label": "Manual override",
+      "tone": "classic",
+      "durationSeconds": 3,
+      "volume": 70,
+      "detail": "Triggered from dashboard control"
     }
   ],
   "triggeredBellKeys": [
@@ -309,7 +433,7 @@
     "2026-05-13|closing"
   ],
   "playerStatus": {
-    "lastSeenAt": "2026-05-19T06:20:29.565Z",
+    "lastSeenAt": "2026-05-19T13:33:51.740Z",
     "audioEnabled": false,
     "label": "Main bell PC"
   }

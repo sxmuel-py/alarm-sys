@@ -27,6 +27,7 @@ export type BellSettings = {
   bellVolume: number;
   bellDuration: number;
   autoTriggerWindowSeconds: number;
+  manualTone: string;
 };
 
 export type AudioStatus = "enabled" | "not-enabled";
@@ -134,6 +135,7 @@ export const defaultSettings: BellSettings = {
   bellVolume: 70,
   bellDuration: 3,
   autoTriggerWindowSeconds: 45,
+  manualTone: "classic",
 };
 
 export const defaultPlayerStatus: PlayerStatus = {

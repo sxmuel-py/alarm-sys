@@ -230,6 +230,10 @@ function normalizeSettings(value: Partial<BellSettings> | null | undefined): Bel
       15,
       60,
     ),
+    manualTone:
+      typeof value?.manualTone === "string"
+        ? value.manualTone
+        : defaultSettings.manualTone,
   };
 }
 
@@ -411,7 +415,7 @@ function queueRingSignal(
   detail: string,
 ) {
   const label = entry?.label ?? "Manual override";
-  const tone = entry?.tone ?? "classic";
+  const tone = entry?.tone ?? store.settings.manualTone ?? "classic";
   const signal: PlayerSignal = {
     id: crypto.randomUUID(),
     type: "ring",
