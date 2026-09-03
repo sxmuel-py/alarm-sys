@@ -395,55 +395,38 @@ function playSoundOnServer(tone: string, volume: number, durationSeconds: number
       console.error("afplay spawn error:", err);
     }
   } else if (process.platform === "win32") {
-    // On Windows, construct a robust PowerShell script using -EncodedCommand (UTF-16LE Base64)
-    // to avoid CLI quote stripping and argument parsing failures.
+    // On Windows, use WMPlayer.OCX COM Object via powershell.exe -EncodedCommand (UTF-16LE Base64)
+    // WMPlayer.OCX supports all MP3/WAV audio encodings and works reliably in console processes.
     const psScript = `
 $ErrorActionPreference = 'Stop'
 $filePath = [System.IO.Path]::GetFullPath("${absolutePath.replace(/"/g, '`"')}")
-$volume = ${vol}
+$volInt = [int](${vol} * 100)
 $duration = ${durationSeconds}
 
-# 1. Primary method for WAV files: System.Media.SoundPlayer (native, synchronous, reliable)
-if ($filePath.EndsWith(".wav", [System.StringComparison]::OrdinalIgnoreCase)) {
-    try {
-        $soundPlayer = New-Object System.Media.SoundPlayer($filePath)
-        $soundPlayer.Play()
-        Start-Sleep -Seconds $duration
-        $soundPlayer.Stop()
-        exit 0
-    } catch {
-        # Fall through to MediaPlayer if SoundPlayer fails
-    }
-}
-
-# 2. Secondary method for MP3/other files: System.Windows.Media.MediaPlayer (PresentationCore)
 try {
-    Add-Type -AssemblyName PresentationCore
-    $player = New-Object System.Windows.Media.MediaPlayer
-    $player.Open([Uri]::new($filePath))
-    $player.Volume = $volume
+    $wmp = New-Object -ComObject WMPlayer.OCX
+    $wmp.settings.volume = $volInt
+    $wmp.URL = $filePath
+    $wmp.controls.play()
+
     $waited = 0
-    while (-not $player.NaturalDuration.HasTimeSpan -and $waited -lt 20) {
+    while ($wmp.playState -ne 3 -and $waited -lt 30) {
         Start-Sleep -Milliseconds 100
         $waited++
     }
-    $player.Play()
-    Start-Sleep -Seconds $duration
-    $player.Close()
-    exit 0
-} catch {
-    # Fall through to WMPlayer.OCX
-}
 
-# 3. Tertiary method: WMPlayer.OCX COM Object
-try {
-    $wmp = New-Object -ComObject WMPlayer.OCX
-    $wmp.settings.volume = [int]($volume * 100)
-    $wmp.URL = $filePath
-    $wmp.controls.play()
     Start-Sleep -Seconds $duration
     $wmp.controls.stop()
+    [System.Runtime.Interopservices.Marshal]::ReleaseComObject($wmp) | Out-Null
+    exit 0
 } catch {
+    if ($filePath.EndsWith(".wav", [System.StringComparison]::OrdinalIgnoreCase)) {
+        try {
+            $soundPlayer = New-Object System.Media.SoundPlayer($filePath)
+            $soundPlayer.PlaySync()
+            exit 0
+        } catch {}
+    }
     Write-Error $_
 }
 `;
