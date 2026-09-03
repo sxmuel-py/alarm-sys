@@ -624,15 +624,15 @@ function cleanupTriggeredKeys(store: BellSystemStore, todayKey: string) {
   const cutoffKey = formatLocalDateKey(cutoff);
 
   store.triggeredBellKeys = store.triggeredBellKeys.filter((key) => {
-    const [dateKey] = key.split("|");
-    return dateKey >= cutoffKey;
+    const parts = key.split("|");
+    // Only keep 3-part keys (date|entryId|time) from the last 7 days
+    return parts.length >= 3 && parts[0] >= cutoffKey;
   });
 }
 
 function isBellTriggered(store: BellSystemStore, todayKey: string, entry: ScheduleEntry): boolean {
   const specificKey = `${todayKey}|${entry.id}|${entry.time}`;
-  const legacyKey = `${todayKey}|${entry.id}`;
-  return store.triggeredBellKeys.includes(specificKey) || store.triggeredBellKeys.includes(legacyKey);
+  return store.triggeredBellKeys.includes(specificKey);
 }
 
 function clearTriggeredKeysForEntry(store: BellSystemStore, entryId: string) {
