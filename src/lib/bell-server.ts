@@ -389,16 +389,36 @@ function playSoundOnServer(tone: string, volume: number, durationSeconds: number
       console.error("afplay spawn error:", err);
     }
   } else if (process.platform === "win32") {
-    // On Windows, use PowerShell system.windows.media.mediaplayer to play both MP3 and WAV files with volume control
-    const windowsPath = absolutePath.replace(/\//g, "\\");
+    // Windows MediaPlayer is a WPF component, so PowerShell must run in STA mode.
+    const playbackInput = Buffer.from(
+      JSON.stringify({
+        path: absolutePath,
+        volume: vol,
+        durationSeconds,
+      }),
+      "utf8",
+    ).toString("base64");
+    const command = `
+$ErrorActionPreference = 'Stop'
+$inputJson = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('${playbackInput}'))
+$inputData = $inputJson | ConvertFrom-Json
+Add-Type -AssemblyName PresentationCore
+$player = [System.Windows.Media.MediaPlayer]::new()
+$player.Open([Uri]::new([System.IO.Path]::GetFullPath($inputData.path)))
+$player.Volume = [double]$inputData.volume
+$player.Play()
+Start-Sleep -Seconds ([int]$inputData.durationSeconds)
+$player.Close()
+`;
     try {
-      console.log(`[Windows Player] Spawning powershell to play: ${windowsPath}`);
+      console.log(`[Windows Player] Spawning powershell to play: ${absolutePath}`);
       const processInstance = spawn("powershell.exe", [
         "-NoProfile",
+        "-Sta",
         "-ExecutionPolicy",
         "Bypass",
         "-Command",
-        `Add-Type -AssemblyName presentationCore; $player = New-Object system.windows.media.mediaplayer; $player.open('${windowsPath}'); $player.Volume = ${vol}; $player.Play(); Start-Sleep -Seconds ${durationSeconds}`,
+        command,
       ]);
       activePlayProcess = processInstance;
       processInstance.stderr.on("data", (data) => {
@@ -768,9 +788,12 @@ function formatLocalDateKey(date: Date) {
 // Start a background interval on the server to ensure automatic triggers fire
 // even if no frontend browser is currently actively polling the API.
 // We use a global variable to prevent hot-reloads in dev mode from spawning multiple intervals.
-const globalAny = global as any;
-if (!globalAny.__bellSystemInterval) {
-  globalAny.__bellSystemInterval = setInterval(() => {
+const globalWithBellInterval = global as typeof globalThis & {
+  __bellSystemInterval?: NodeJS.Timeout;
+};
+
+if (!globalWithBellInterval.__bellSystemInterval) {
+  globalWithBellInterval.__bellSystemInterval = setInterval(() => {
     withStoreLock((store) => {
       processAutomaticTriggers(store, new Date());
     }).catch(console.error);
