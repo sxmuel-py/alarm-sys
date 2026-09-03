@@ -395,50 +395,70 @@ function playSoundOnServer(tone: string, volume: number, durationSeconds: number
       console.error("afplay spawn error:", err);
     }
   } else if (process.platform === "win32") {
-    // Windows Media Player COM / WPF component for playback on Windows host server
-    const playbackInput = Buffer.from(
-      JSON.stringify({
-        path: absolutePath,
-        volume: vol,
-        durationSeconds,
-      }),
-      "utf8",
-    ).toString("base64");
-    const command = `
+    // On Windows, construct a robust PowerShell script using -EncodedCommand (UTF-16LE Base64)
+    // to avoid CLI quote stripping and argument parsing failures.
+    const psScript = `
 $ErrorActionPreference = 'Stop'
-$inputJson = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('${playbackInput}'))
-$inputData = $inputJson | ConvertFrom-Json
-$filePath = [System.IO.Path]::GetFullPath($inputData.path)
-$volInt = [int]($inputData.volume * 100)
-$duration = [int]$inputData.durationSeconds
+$filePath = [System.IO.Path]::GetFullPath("${absolutePath.replace(/"/g, '`"')}")
+$volume = ${vol}
+$duration = ${durationSeconds}
 
+# 1. Primary method for WAV files: System.Media.SoundPlayer (native, synchronous, reliable)
+if ($filePath.EndsWith(".wav", [System.StringComparison]::OrdinalIgnoreCase)) {
+    try {
+        $soundPlayer = New-Object System.Media.SoundPlayer($filePath)
+        $soundPlayer.Play()
+        Start-Sleep -Seconds $duration
+        $soundPlayer.Stop()
+        exit 0
+    } catch {
+        # Fall through to MediaPlayer if SoundPlayer fails
+    }
+}
+
+# 2. Secondary method for MP3/other files: System.Windows.Media.MediaPlayer (PresentationCore)
+try {
+    Add-Type -AssemblyName PresentationCore
+    $player = New-Object System.Windows.Media.MediaPlayer
+    $player.Open([Uri]::new($filePath))
+    $player.Volume = $volume
+    $waited = 0
+    while (-not $player.NaturalDuration.HasTimeSpan -and $waited -lt 20) {
+        Start-Sleep -Milliseconds 100
+        $waited++
+    }
+    $player.Play()
+    Start-Sleep -Seconds $duration
+    $player.Close()
+    exit 0
+} catch {
+    # Fall through to WMPlayer.OCX
+}
+
+# 3. Tertiary method: WMPlayer.OCX COM Object
 try {
     $wmp = New-Object -ComObject WMPlayer.OCX
-    $wmp.settings.volume = $volInt
+    $wmp.settings.volume = [int]($volume * 100)
     $wmp.URL = $filePath
     $wmp.controls.play()
     Start-Sleep -Seconds $duration
     $wmp.controls.stop()
 } catch {
-    Add-Type -AssemblyName PresentationCore
-    $player = [System.Windows.Media.MediaPlayer]::new()
-    $player.Open([Uri]::new($filePath))
-    $player.Volume = [double]$inputData.volume
-    Start-Sleep -Milliseconds 300
-    $player.Play()
-    Start-Sleep -Seconds $duration
-    $player.Close()
+    Write-Error $_
 }
 `;
+
+    const encodedCommand = Buffer.from(psScript, "utf16le").toString("base64");
+
     try {
-      console.log(`[Windows Player] Spawning powershell to play: ${absolutePath}`);
+      console.log(`[Windows Player] Spawning powershell -EncodedCommand to play: ${absolutePath}`);
       const processInstance = spawn("powershell.exe", [
         "-NoProfile",
         "-Sta",
         "-ExecutionPolicy",
         "Bypass",
-        "-Command",
-        command,
+        "-EncodedCommand",
+        encodedCommand,
       ]);
       activePlayProcess = processInstance;
       processInstance.stderr.on("data", (data) => {

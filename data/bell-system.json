@@ -93,9 +93,9 @@
       "note": ""
     },
     {
-      "id": "c2e0fc8f-9a5c-41b1-81a7-c2d8f7397e46",
-      "label": "Tester",
-      "time": "12:34",
+      "id": "4773858a-7907-4cc9-a5df-15a556f6cfda",
+      "label": "Period Five Begins",
+      "time": "13:00",
       "days": [
         1,
         2,
@@ -108,9 +108,9 @@
       "note": ""
     },
     {
-      "id": "4773858a-7907-4cc9-a5df-15a556f6cfda",
-      "label": "Period Five Begins",
-      "time": "13:00",
+      "id": "c2e0fc8f-9a5c-41b1-81a7-c2d8f7397e46",
+      "label": "Tester",
+      "time": "13:03",
       "days": [
         1,
         2,
@@ -139,6 +139,48 @@
     }
   ],
   "logs": [
+    {
+      "id": "bfcbe6c5-b6d3-43da-84df-d7d5d0ca607d",
+      "timestamp": "2026-09-03T12:03:02.272Z",
+      "source": "automatic",
+      "message": "Tester bell triggered",
+      "detail": "13:03 scheduled bell"
+    },
+    {
+      "id": "62241295-1301-48ed-b790-ab3754b9e3c3",
+      "timestamp": "2026-09-03T12:03:00.012Z",
+      "source": "automatic",
+      "message": "Tester bell triggered",
+      "detail": "13:03 scheduled bell"
+    },
+    {
+      "id": "d94b1616-9e25-4ae2-907c-54493546fe1e",
+      "timestamp": "2026-09-03T12:01:59.197Z",
+      "source": "system",
+      "message": "Schedule entry updated",
+      "detail": "13:03 Tester"
+    },
+    {
+      "id": "9ff7cedd-6302-43b9-bd82-30cd142df5ab",
+      "timestamp": "2026-09-03T12:00:02.226Z",
+      "source": "automatic",
+      "message": "Period Five Begins bell triggered",
+      "detail": "13:00 scheduled bell"
+    },
+    {
+      "id": "e1bb1e27-4429-408a-8738-d8539c05d1c0",
+      "timestamp": "2026-09-03T11:58:02.213Z",
+      "source": "automatic",
+      "message": "Tester bell triggered",
+      "detail": "12:58 scheduled bell"
+    },
+    {
+      "id": "ff4dd764-15e4-437d-9a3b-1c045c7bf350",
+      "timestamp": "2026-09-03T11:56:20.013Z",
+      "source": "system",
+      "message": "Schedule entry updated",
+      "detail": "12:58 Tester"
+    },
     {
       "id": "26240621-021b-4f30-972b-3d8c6f9d9bf5",
       "timestamp": "2026-09-03T11:38:32.824Z",
@@ -872,11 +914,62 @@
       "durationSeconds": 23,
       "volume": 70,
       "detail": "12:34 scheduled bell"
+    },
+    {
+      "id": "9f41afdf-1c62-4349-b909-f2691b14dfd5",
+      "type": "ring",
+      "createdAt": "2026-09-03T11:58:02.213Z",
+      "source": "automatic",
+      "entryId": "c2e0fc8f-9a5c-41b1-81a7-c2d8f7397e46",
+      "label": "Tester",
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "durationSeconds": 23,
+      "volume": 70,
+      "detail": "12:58 scheduled bell"
+    },
+    {
+      "id": "bac83852-bfab-44db-96e7-4125625415c0",
+      "type": "ring",
+      "createdAt": "2026-09-03T12:00:02.226Z",
+      "source": "automatic",
+      "entryId": "4773858a-7907-4cc9-a5df-15a556f6cfda",
+      "label": "Period Five Begins",
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "durationSeconds": 23,
+      "volume": 70,
+      "detail": "13:00 scheduled bell"
+    },
+    {
+      "id": "1ded27d6-a583-4ceb-8e41-8b08c6cfa4c7",
+      "type": "ring",
+      "createdAt": "2026-09-03T12:03:00.012Z",
+      "source": "automatic",
+      "entryId": "c2e0fc8f-9a5c-41b1-81a7-c2d8f7397e46",
+      "label": "Tester",
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "durationSeconds": 23,
+      "volume": 70,
+      "detail": "13:03 scheduled bell"
+    },
+    {
+      "id": "c1c56cf4-4a8c-4457-bdfa-b5328a095238",
+      "type": "ring",
+      "createdAt": "2026-09-03T12:03:02.272Z",
+      "source": "automatic",
+      "entryId": "c2e0fc8f-9a5c-41b1-81a7-c2d8f7397e46",
+      "label": "Tester",
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "durationSeconds": 23,
+      "volume": 70,
+      "detail": "13:03 scheduled bell"
     }
   ],
   "triggeredBellKeys": [
-    "2026-09-03|c2e0fc8f-9a5c-41b1-81a7-c2d8f7397e46|12:34"
+    "2026-09-03|4773858a-7907-4cc9-a5df-15a556f6cfda",
+    "2026-09-03|c2e0fc8f-9a5c-41b1-81a7-c2d8f7397e46|13:03",
+    "2026-09-03|c2e0fc8f-9a5c-41b1-81a7-c2d8f7397e46"
   ],
+  "lastAutomaticCheckAt": "2026-09-03T12:06:08.769Z",
   "playerStatus": {
     "lastSeenAt": "2026-09-03T11:30:39.285Z",
     "audioEnabled": false,
