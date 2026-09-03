@@ -395,13 +395,50 @@ function playSoundOnServer(tone: string, volume: number, durationSeconds: number
       console.error("afplay spawn error:", err);
     }
   } else if (process.platform === "win32") {
-    // On Windows, use WMPlayer.OCX COM Object via powershell.exe -EncodedCommand (UTF-16LE Base64)
-    // WMPlayer.OCX supports all MP3/WAV audio encodings and works reliably in console processes.
+    // On Windows, use Win32 MCI (winmm.dll) API via C# inline in PowerShell.
+    // mciSendString is built into all Windows OS releases (Win 7/8/10/11) and works in background processes.
     const psScript = `
 $ErrorActionPreference = 'Stop'
 $filePath = [System.IO.Path]::GetFullPath("${absolutePath.replace(/"/g, '`"')}")
 $volInt = [int](${vol} * 100)
 $duration = ${durationSeconds}
+
+try {
+    $csharp = @'
+    using System;
+    using System.Text;
+    using System.Runtime.InteropServices;
+
+    public class WinMciAudio {
+        [DllImport("winmm.dll", CharSet = CharSet.Auto)]
+        private static extern int mciSendString(string command, StringBuilder buffer, int bufferSize, IntPtr hwndCallback);
+
+        public static bool PlayAudio(string path, int volumePercent, int durationSec) {
+            string alias = "bell_" + Guid.NewGuid().ToString("N");
+            int openRes = mciSendString("open \\"" + path + "\\" type mpegvideo alias " + alias, null, 0, IntPtr.Zero);
+            if (openRes != 0) {
+                openRes = mciSendString("open \\"" + path + "\\" alias " + alias, null, 0, IntPtr.Zero);
+            }
+            if (openRes != 0) return false;
+
+            int mciVol = Math.Max(0, Math.Min(1000, volumePercent * 10));
+            mciSendString("setaudio " + alias + " volume to " + mciVol, null, 0, IntPtr.Zero);
+            mciSendString("play " + alias + " from 0", null, 0, IntPtr.Zero);
+
+            System.Threading.Thread.Sleep(durationSec * 1000);
+
+            mciSendString("stop " + alias, null, 0, IntPtr.Zero);
+            mciSendString("close " + alias, null, 0, IntPtr.Zero);
+            return true;
+        }
+    }
+'@
+    Add-Type -TypeDefinition $csharp
+    $success = [WinMciAudio]::PlayAudio($filePath, $volInt, $duration)
+    if ($success) { exit 0 }
+} catch {
+    # Fallback to WMPlayer COM object if C# MCI fails
+}
 
 try {
     $wmp = New-Object -ComObject WMPlayer.OCX
@@ -420,13 +457,6 @@ try {
     [System.Runtime.Interopservices.Marshal]::ReleaseComObject($wmp) | Out-Null
     exit 0
 } catch {
-    if ($filePath.EndsWith(".wav", [System.StringComparison]::OrdinalIgnoreCase)) {
-        try {
-            $soundPlayer = New-Object System.Media.SoundPlayer($filePath)
-            $soundPlayer.PlaySync()
-            exit 0
-        } catch {}
-    }
     Write-Error $_
 }
 `;
