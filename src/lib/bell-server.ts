@@ -764,3 +764,15 @@ function formatLocalDateKey(date: Date) {
 
   return `${year}-${month}-${day}`;
 }
+
+// Start a background interval on the server to ensure automatic triggers fire
+// even if no frontend browser is currently actively polling the API.
+// We use a global variable to prevent hot-reloads in dev mode from spawning multiple intervals.
+const globalAny = global as any;
+if (!globalAny.__bellSystemInterval) {
+  globalAny.__bellSystemInterval = setInterval(() => {
+    withStoreLock((store) => {
+      processAutomaticTriggers(store, new Date());
+    }).catch(console.error);
+  }, 10000); // Check the schedule every 10 seconds
+}
