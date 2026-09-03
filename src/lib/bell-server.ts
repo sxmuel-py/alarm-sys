@@ -28,6 +28,7 @@ type BellSystemStore = {
   settings: BellSettings;
   playerSignals: PlayerSignal[];
   triggeredBellKeys: string[];
+  lastAutomaticCheckAt: string | null;
   playerStatus: PlayerStatus;
 };
 
@@ -75,6 +76,7 @@ function createDefaultStore(): BellSystemStore {
     settings: defaultSettings,
     playerSignals: [],
     triggeredBellKeys: [],
+    lastAutomaticCheckAt: null,
     playerStatus: defaultPlayerStatus,
   };
 }
@@ -135,6 +137,10 @@ function normalizeStore(value: unknown): BellSystemStore {
     triggeredBellKeys: Array.isArray(candidate?.triggeredBellKeys)
       ? candidate.triggeredBellKeys.filter((item): item is string => typeof item === "string")
       : fallback.triggeredBellKeys,
+    lastAutomaticCheckAt:
+      typeof candidate?.lastAutomaticCheckAt === "string"
+        ? candidate.lastAutomaticCheckAt
+        : fallback.lastAutomaticCheckAt,
     playerStatus: normalizePlayerStatus(candidate?.playerStatus),
   };
 }
@@ -389,7 +395,7 @@ function playSoundOnServer(tone: string, volume: number, durationSeconds: number
       console.error("afplay spawn error:", err);
     }
   } else if (process.platform === "win32") {
-    // Windows MediaPlayer is a WPF component, so PowerShell must run in STA mode.
+    // Windows Media Player COM / WPF component for playback on Windows host server
     const playbackInput = Buffer.from(
       JSON.stringify({
         path: absolutePath,
@@ -402,13 +408,27 @@ function playSoundOnServer(tone: string, volume: number, durationSeconds: number
 $ErrorActionPreference = 'Stop'
 $inputJson = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('${playbackInput}'))
 $inputData = $inputJson | ConvertFrom-Json
-Add-Type -AssemblyName PresentationCore
-$player = [System.Windows.Media.MediaPlayer]::new()
-$player.Open([Uri]::new([System.IO.Path]::GetFullPath($inputData.path)))
-$player.Volume = [double]$inputData.volume
-$player.Play()
-Start-Sleep -Seconds ([int]$inputData.durationSeconds)
-$player.Close()
+$filePath = [System.IO.Path]::GetFullPath($inputData.path)
+$volInt = [int]($inputData.volume * 100)
+$duration = [int]$inputData.durationSeconds
+
+try {
+    $wmp = New-Object -ComObject WMPlayer.OCX
+    $wmp.settings.volume = $volInt
+    $wmp.URL = $filePath
+    $wmp.controls.play()
+    Start-Sleep -Seconds $duration
+    $wmp.controls.stop()
+} catch {
+    Add-Type -AssemblyName PresentationCore
+    $player = [System.Windows.Media.MediaPlayer]::new()
+    $player.Open([Uri]::new($filePath))
+    $player.Volume = [double]$inputData.volume
+    Start-Sleep -Milliseconds 300
+    $player.Play()
+    Start-Sleep -Seconds $duration
+    $player.Close()
+}
 `;
     try {
       console.log(`[Windows Player] Spawning powershell to play: ${absolutePath}`);
@@ -576,30 +596,47 @@ function cleanupTriggeredKeys(store: BellSystemStore, todayKey: string) {
   });
 }
 
+function isBellTriggered(store: BellSystemStore, todayKey: string, entry: ScheduleEntry): boolean {
+  const specificKey = `${todayKey}|${entry.id}|${entry.time}`;
+  const legacyKey = `${todayKey}|${entry.id}`;
+  return store.triggeredBellKeys.includes(specificKey) || store.triggeredBellKeys.includes(legacyKey);
+}
+
+function clearTriggeredKeysForEntry(store: BellSystemStore, entryId: string) {
+  store.triggeredBellKeys = store.triggeredBellKeys.filter((key) => {
+    const parts = key.split("|");
+    return parts[1] !== entryId;
+  });
+}
+
 function processAutomaticTriggers(store: BellSystemStore, now: Date) {
   const todayKey = formatLocalDateKey(now);
   cleanupTriggeredKeys(store, todayKey);
 
   if (store.status !== "active") {
+    store.lastAutomaticCheckAt = now.toISOString();
     return;
   }
 
   const todaySchedule = getTodaySchedule(store.schedule, now);
   const nowSeconds = secondsSinceMidnight(now);
+  const catchUpWindowSeconds = Math.max(store.settings.autoTriggerWindowSeconds, 5 * 60);
 
   for (const entry of todaySchedule) {
-    const delta = nowSeconds - timeToSeconds(entry.time);
-    const triggerKey = `${todayKey}|${entry.id}`;
+    const entrySeconds = timeToSeconds(entry.time);
+    const triggerKey = `${todayKey}|${entry.id}|${entry.time}`;
 
     if (
-      delta >= 0 &&
-      delta < store.settings.autoTriggerWindowSeconds &&
-      !store.triggeredBellKeys.includes(triggerKey)
+      nowSeconds >= entrySeconds &&
+      nowSeconds - entrySeconds <= catchUpWindowSeconds &&
+      !isBellTriggered(store, todayKey, entry)
     ) {
       store.triggeredBellKeys.push(triggerKey);
       queueRingSignal(store, entry, "automatic", `${entry.time} scheduled bell`);
     }
   }
+
+  store.lastAutomaticCheckAt = now.toISOString();
 }
 
 function sortSchedule(entries: ScheduleEntry[]) {
@@ -675,12 +712,14 @@ export async function dispatchBellAction(action: BellAction) {
         store.schedule = sortSchedule(
           store.schedule.map((item) => (item.id === action.id ? entry : item)),
         );
+        clearTriggeredKeysForEntry(store, action.id);
         writeLog(store, "system", "Schedule entry updated", `${entry.time} ${entry.label}`);
         break;
       }
       case "delete-schedule-entry": {
         const deleted = store.schedule.find((item) => item.id === action.id) ?? null;
         store.schedule = store.schedule.filter((item) => item.id !== action.id);
+        clearTriggeredKeysForEntry(store, action.id);
         writeLog(
           store,
           "system",
@@ -696,6 +735,7 @@ export async function dispatchBellAction(action: BellAction) {
           item.id === action.id && changed ? changed : item,
         );
 
+        clearTriggeredKeysForEntry(store, action.id);
         if (changed) {
           writeLog(
             store,
@@ -708,6 +748,7 @@ export async function dispatchBellAction(action: BellAction) {
       }
       case "replace-schedule":
         store.schedule = sortSchedule(action.entries.map((entry) => normalizeScheduleEntry(entry)));
+        store.triggeredBellKeys = [];
         writeLog(store, "system", "Schedule imported", `${store.schedule.length} entries uploaded`);
         break;
       case "clear-logs":
@@ -724,6 +765,7 @@ export async function dispatchBellAction(action: BellAction) {
         store.settings = defaultSettings;
         store.playerSignals = [];
         store.triggeredBellKeys = [];
+        store.lastAutomaticCheckAt = null;
         store.playerStatus = defaultPlayerStatus;
         break;
     }
@@ -797,5 +839,5 @@ if (!globalWithBellInterval.__bellSystemInterval) {
     withStoreLock((store) => {
       processAutomaticTriggers(store, new Date());
     }).catch(console.error);
-  }, 10000); // Check the schedule every 10 seconds
+  }, 3000); // Check the schedule every 3 seconds
 }
