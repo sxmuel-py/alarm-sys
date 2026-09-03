@@ -46,6 +46,7 @@ type BellAction =
   | { type: "update-schedule-entry"; id: string; entry: Omit<ScheduleEntry, "id"> }
   | { type: "delete-schedule-entry"; id: string }
   | { type: "toggle-schedule-entry"; id: string }
+  | { type: "replace-schedule"; entries: ScheduleEntry[] }
   | { type: "clear-logs" }
   | { type: "update-settings"; settings: BellSettings }
   | { type: "reset-demo-data" };
@@ -685,6 +686,10 @@ export async function dispatchBellAction(action: BellAction) {
         }
         break;
       }
+      case "replace-schedule":
+        store.schedule = sortSchedule(action.entries.map((entry) => normalizeScheduleEntry(entry)));
+        writeLog(store, "system", "Schedule imported", `${store.schedule.length} entries uploaded`);
+        break;
       case "clear-logs":
         store.logs = [];
         break;

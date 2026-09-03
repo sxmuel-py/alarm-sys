@@ -315,12 +315,14 @@ export function SchedulePage() {
     updateScheduleEntry,
     deleteScheduleEntry,
     toggleScheduleEntry,
+    replaceSchedule,
     availableSounds = [],
     settings,
   } = useBellSystem();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draft, setDraft] = useState<ScheduleDraft>(emptyDraft);
   const [previewing, setPreviewing] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     return () => {
@@ -371,24 +373,84 @@ export function SchedulePage() {
     setTimeout(() => setPreviewing(false), settings.bellDuration * 1000);
   }
 
+  function exportSchedule() {
+    const dataStr = JSON.stringify(schedule, null, 2);
+    const dataBlob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "timetable.json";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+
+  function importSchedule(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const parsed = JSON.parse(e.target?.result as string);
+        if (Array.isArray(parsed)) {
+          replaceSchedule(parsed);
+          alert(`Successfully imported ${parsed.length} schedule entries.`);
+        } else {
+          alert("Invalid timetable format. Expected a JSON array.");
+        }
+      } catch (error) {
+        alert("Error parsing timetable file.");
+      }
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    };
+    reader.readAsText(file);
+  }
+
   return (
     <div className="space-y-6">
       <PageHeader
         eyebrow="Timetable Management"
         title="Schedule"
         action={
-          editing ? (
+          <div className="flex items-center gap-3">
+            {editing ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setEditingId(null);
+                  setDraft(emptyDraft);
+                }}
+                className="rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                Cancel Edit
+              </button>
+            ) : null}
+            <input 
+              type="file" 
+              accept=".json" 
+              ref={fileInputRef} 
+              className="hidden" 
+              onChange={importSchedule} 
+            />
             <button
               type="button"
-              onClick={() => {
-                setEditingId(null);
-                setDraft(emptyDraft);
-              }}
+              onClick={() => fileInputRef.current?.click()}
               className="rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
             >
-              Cancel Edit
+              Upload
             </button>
-          ) : null
+            <button
+              type="button"
+              onClick={exportSchedule}
+              className="rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            >
+              Download
+            </button>
+          </div>
         }
       />
 

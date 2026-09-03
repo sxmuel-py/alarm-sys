@@ -44,6 +44,7 @@ type BellContextValue = {
   updateScheduleEntry: (id: string, entry: Omit<ScheduleEntry, "id">) => void;
   deleteScheduleEntry: (id: string) => void;
   toggleScheduleEntry: (id: string) => void;
+  replaceSchedule: (entries: ScheduleEntry[]) => void;
   clearLogs: () => void;
   updateSettings: (settings: BellSettings) => void;
   resetDemoData: () => void;
@@ -203,6 +204,11 @@ export function BellProvider({ children }: { children: React.ReactNode }) {
       },
       toggleScheduleEntry: (id) => {
         void postAction({ type: "toggle-schedule-entry", id }).catch((error) => {
+          console.error(error);
+        });
+      },
+      replaceSchedule: (entries) => {
+        void postAction({ type: "replace-schedule", entries }).catch((error) => {
           console.error(error);
         });
       },
