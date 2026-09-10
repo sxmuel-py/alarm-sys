@@ -1,0 +1,332 @@
+[
+  {
+    "id": "7a29e120-1111-4111-8111-000000000001",
+    "label": "Form Time (Music Starts)",
+    "time": "07:25",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music starts"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000002",
+    "label": "Form Time (Music Stops)",
+    "time": "07:30",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music stops"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000003",
+    "label": "Form Time Warning (Music Starts)",
+    "time": "07:55",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music starts again"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000004",
+    "label": "Period 1 Begins (Music Stops)",
+    "time": "08:00",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music stops"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000005",
+    "label": "Period 1 Warning (Music Starts)",
+    "time": "08:55",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music starts"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000006",
+    "label": "Period 2 Begins (Music Stops)",
+    "time": "09:00",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music stops"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000007",
+    "label": "Period 2 Warning (Music Starts)",
+    "time": "09:55",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music starts"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000008",
+    "label": "Snack Break Begins (Music Stops)",
+    "time": "10:00",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music stops"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000009",
+    "label": "Snack Break Warning (Music Starts)",
+    "time": "10:20",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music starts"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000010",
+    "label": "Period 3 Begins (Music Stops)",
+    "time": "10:25",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music stops"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000011",
+    "label": "Period 3 Warning (Music Starts)",
+    "time": "11:20",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music starts"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000012",
+    "label": "Period 4 Begins (Music Stops)",
+    "time": "11:25",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music stops"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000013",
+    "label": "Period 4 Warning (Music Starts)",
+    "time": "12:20",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music starts"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000014",
+    "label": "Lunch Begins (Music Stops)",
+    "time": "12:25",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music stops"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000015",
+    "label": "Lunch Warning (Music Starts)",
+    "time": "12:55",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music starts"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000016",
+    "label": "Period 5 Begins (Music Stops)",
+    "time": "13:00",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music stops"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000017",
+    "label": "Period 5 Warning (Music Starts)",
+    "time": "13:55",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music starts"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000018",
+    "label": "Period 6 Begins (Music Stops)",
+    "time": "14:00",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music stops"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000019",
+    "label": "Period 6 Warning (Music Starts)",
+    "time": "14:55",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music starts"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000020",
+    "label": "Pickup (Music Stops)",
+    "time": "15:00",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music stops from 3:00 pm"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000021",
+    "label": "ECAs (Music Starts)",
+    "time": "15:55",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music starts"
+  },
+  {
+    "id": "7a29e120-1111-4111-8111-000000000022",
+    "label": "ECAs End (Music Stops)",
+    "time": "16:00",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": "Music stops"
+  }
+]

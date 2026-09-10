@@ -3,8 +3,53 @@
   "status": "active",
   "schedule": [
     {
-      "id": "571b7d9f-30d3-46f2-8180-fcefb602ca2f",
-      "label": "Period One Begins",
+      "id": "7a29e120-1111-4111-8111-000000000001",
+      "label": "Form Time (Music Starts)",
+      "time": "07:25",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "enabled": true,
+      "note": "Music starts"
+    },
+    {
+      "id": "7a29e120-1111-4111-8111-000000000002",
+      "label": "Form Time (Music Stops)",
+      "time": "07:30",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "enabled": true,
+      "note": "Music stops"
+    },
+    {
+      "id": "7a29e120-1111-4111-8111-000000000003",
+      "label": "Form Time Warning (Music Starts)",
+      "time": "07:55",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "enabled": true,
+      "note": "Music starts again"
+    },
+    {
+      "id": "7a29e120-1111-4111-8111-000000000004",
+      "label": "Period 1 Begins (Music Stops)",
       "time": "08:00",
       "days": [
         1,
@@ -15,11 +60,26 @@
       ],
       "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
       "enabled": true,
-      "note": ""
+      "note": "Music stops"
     },
     {
-      "id": "53a36491-9f98-4ee6-9b37-6465124f5553",
-      "label": "Period Two Begins",
+      "id": "7a29e120-1111-4111-8111-000000000005",
+      "label": "Period 1 Warning (Music Starts)",
+      "time": "08:55",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "enabled": true,
+      "note": "Music starts"
+    },
+    {
+      "id": "7a29e120-1111-4111-8111-000000000006",
+      "label": "Period 2 Begins (Music Stops)",
       "time": "09:00",
       "days": [
         1,
@@ -30,11 +90,26 @@
       ],
       "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
       "enabled": true,
-      "note": ""
+      "note": "Music stops"
     },
     {
-      "id": "df0b24ad-09eb-410c-8f43-abff37bbf8a4",
-      "label": "Short Break",
+      "id": "7a29e120-1111-4111-8111-000000000007",
+      "label": "Period 2 Warning (Music Starts)",
+      "time": "09:55",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "enabled": true,
+      "note": "Music starts"
+    },
+    {
+      "id": "7a29e120-1111-4111-8111-000000000008",
+      "label": "Snack Break Begins (Music Stops)",
       "time": "10:00",
       "days": [
         1,
@@ -45,12 +120,12 @@
       ],
       "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
       "enabled": true,
-      "note": ""
+      "note": "Music stops"
     },
     {
-      "id": "f3b6404f-080d-420e-9299-0ab3f659ba8a",
-      "label": "Period Three Begins",
-      "time": "10:15",
+      "id": "7a29e120-1111-4111-8111-000000000009",
+      "label": "Snack Break Warning (Music Starts)",
+      "time": "10:20",
       "days": [
         1,
         2,
@@ -60,12 +135,12 @@
       ],
       "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
       "enabled": true,
-      "note": ""
+      "note": "Music starts"
     },
     {
-      "id": "053fcfb7-ae44-4f54-857b-5a968fb04f0d",
-      "label": "Period Four Begins",
-      "time": "11:15",
+      "id": "7a29e120-1111-4111-8111-000000000010",
+      "label": "Period 3 Begins (Music Stops)",
+      "time": "10:25",
       "days": [
         1,
         2,
@@ -75,12 +150,12 @@
       ],
       "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
       "enabled": true,
-      "note": ""
+      "note": "Music stops"
     },
     {
-      "id": "e0b1d55d-2064-4959-b81a-070af550cbea",
-      "label": "Long Break",
-      "time": "12:15",
+      "id": "7a29e120-1111-4111-8111-000000000011",
+      "label": "Period 3 Warning (Music Starts)",
+      "time": "11:20",
       "days": [
         1,
         2,
@@ -90,11 +165,71 @@
       ],
       "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
       "enabled": true,
-      "note": ""
+      "note": "Music starts"
     },
     {
-      "id": "4773858a-7907-4cc9-a5df-15a556f6cfda",
-      "label": "Period Five Begins",
+      "id": "7a29e120-1111-4111-8111-000000000012",
+      "label": "Period 4 Begins (Music Stops)",
+      "time": "11:25",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "enabled": true,
+      "note": "Music stops"
+    },
+    {
+      "id": "7a29e120-1111-4111-8111-000000000013",
+      "label": "Period 4 Warning (Music Starts)",
+      "time": "12:20",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "enabled": true,
+      "note": "Music starts"
+    },
+    {
+      "id": "7a29e120-1111-4111-8111-000000000014",
+      "label": "Lunch Begins (Music Stops)",
+      "time": "12:25",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "enabled": true,
+      "note": "Music stops"
+    },
+    {
+      "id": "7a29e120-1111-4111-8111-000000000015",
+      "label": "Lunch Warning (Music Starts)",
+      "time": "12:55",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "enabled": true,
+      "note": "Music starts"
+    },
+    {
+      "id": "7a29e120-1111-4111-8111-000000000016",
+      "label": "Period 5 Begins (Music Stops)",
       "time": "13:00",
       "days": [
         1,
@@ -105,12 +240,12 @@
       ],
       "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
       "enabled": true,
-      "note": ""
+      "note": "Music stops"
     },
     {
-      "id": "c2e0fc8f-9a5c-41b1-81a7-c2d8f7397e46",
-      "label": "Tester",
-      "time": "13:12",
+      "id": "7a29e120-1111-4111-8111-000000000017",
+      "label": "Period 5 Warning (Music Starts)",
+      "time": "13:55",
       "days": [
         1,
         2,
@@ -120,11 +255,11 @@
       ],
       "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
       "enabled": true,
-      "note": ""
+      "note": "Music starts"
     },
     {
-      "id": "f44644ef-103e-4fab-996b-743c8d2c9fc5",
-      "label": "Period Six Begins",
+      "id": "7a29e120-1111-4111-8111-000000000018",
+      "label": "Period 6 Begins (Music Stops)",
       "time": "14:00",
       "days": [
         1,
@@ -135,774 +270,70 @@
       ],
       "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
       "enabled": true,
-      "note": ""
+      "note": "Music stops"
+    },
+    {
+      "id": "7a29e120-1111-4111-8111-000000000019",
+      "label": "Period 6 Warning (Music Starts)",
+      "time": "14:55",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "enabled": true,
+      "note": "Music starts"
+    },
+    {
+      "id": "7a29e120-1111-4111-8111-000000000020",
+      "label": "Pickup (Music Stops)",
+      "time": "15:00",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "enabled": true,
+      "note": "Music stops from 3:00 pm"
+    },
+    {
+      "id": "7a29e120-1111-4111-8111-000000000021",
+      "label": "ECAs (Music Starts)",
+      "time": "15:55",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "enabled": true,
+      "note": "Music starts"
+    },
+    {
+      "id": "7a29e120-1111-4111-8111-000000000022",
+      "label": "ECAs End (Music Stops)",
+      "time": "16:00",
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+      "enabled": true,
+      "note": "Music stops"
     }
   ],
-  "logs": [
-    {
-      "id": "f5fd6c94-bb74-43f0-aa83-a3b473174cda",
-      "timestamp": "2026-09-03T12:12:02.335Z",
-      "source": "automatic",
-      "message": "Tester bell triggered",
-      "detail": "13:12 scheduled bell"
-    },
-    {
-      "id": "c5949093-d49c-47d0-972f-43e348ec3759",
-      "timestamp": "2026-09-03T12:10:28.517Z",
-      "source": "system",
-      "message": "Schedule entry updated",
-      "detail": "13:12 Tester"
-    },
-    {
-      "id": "bfcbe6c5-b6d3-43da-84df-d7d5d0ca607d",
-      "timestamp": "2026-09-03T12:03:02.272Z",
-      "source": "automatic",
-      "message": "Tester bell triggered",
-      "detail": "13:03 scheduled bell"
-    },
-    {
-      "id": "62241295-1301-48ed-b790-ab3754b9e3c3",
-      "timestamp": "2026-09-03T12:03:00.012Z",
-      "source": "automatic",
-      "message": "Tester bell triggered",
-      "detail": "13:03 scheduled bell"
-    },
-    {
-      "id": "d94b1616-9e25-4ae2-907c-54493546fe1e",
-      "timestamp": "2026-09-03T12:01:59.197Z",
-      "source": "system",
-      "message": "Schedule entry updated",
-      "detail": "13:03 Tester"
-    },
-    {
-      "id": "9ff7cedd-6302-43b9-bd82-30cd142df5ab",
-      "timestamp": "2026-09-03T12:00:02.226Z",
-      "source": "automatic",
-      "message": "Period Five Begins bell triggered",
-      "detail": "13:00 scheduled bell"
-    },
-    {
-      "id": "e1bb1e27-4429-408a-8738-d8539c05d1c0",
-      "timestamp": "2026-09-03T11:58:02.213Z",
-      "source": "automatic",
-      "message": "Tester bell triggered",
-      "detail": "12:58 scheduled bell"
-    },
-    {
-      "id": "ff4dd764-15e4-437d-9a3b-1c045c7bf350",
-      "timestamp": "2026-09-03T11:56:20.013Z",
-      "source": "system",
-      "message": "Schedule entry updated",
-      "detail": "12:58 Tester"
-    },
-    {
-      "id": "26240621-021b-4f30-972b-3d8c6f9d9bf5",
-      "timestamp": "2026-09-03T11:38:32.824Z",
-      "source": "automatic",
-      "message": "Tester bell triggered",
-      "detail": "12:34 scheduled bell"
-    },
-    {
-      "id": "a5e49c03-9cd4-48f3-b267-de37ddb748ef",
-      "timestamp": "2026-09-03T11:38:06.424Z",
-      "source": "system",
-      "message": "Schedule resumed",
-      "detail": "Operator changed automatic trigger state"
-    },
-    {
-      "id": "3ff363a1-50fd-4c32-b081-c817ea96799e",
-      "timestamp": "2026-09-03T11:38:04.987Z",
-      "source": "system",
-      "message": "Emergency stop activated",
-      "detail": "Automatic bell triggers disabled until schedule is resumed"
-    },
-    {
-      "id": "b5141a1c-11df-45fb-ad58-51c46d8759b4",
-      "timestamp": "2026-09-03T11:38:02.451Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "81b5f4bc-9720-4f5b-bfb3-d4791dbda030",
-      "timestamp": "2026-09-03T11:33:01.209Z",
-      "source": "system",
-      "message": "Schedule entry updated",
-      "detail": "12:34 Tester"
-    },
-    {
-      "id": "1bd442d4-025c-4cf3-9191-2ea1dfd72547",
-      "timestamp": "2026-09-03T11:30:50.623Z",
-      "source": "system",
-      "message": "Schedule entry updated",
-      "detail": "12:35 Tester"
-    },
-    {
-      "id": "7f5aaff0-ba6e-443a-922f-1283dd59e964",
-      "timestamp": "2026-09-03T11:29:39.421Z",
-      "source": "system",
-      "message": "Schedule entry updated",
-      "detail": "12:30 Tester"
-    },
-    {
-      "id": "b6c05325-ad90-4820-a332-acabafae2683",
-      "timestamp": "2026-09-03T11:29:22.887Z",
-      "source": "system",
-      "message": "Schedule resumed",
-      "detail": "Operator changed automatic trigger state"
-    },
-    {
-      "id": "2a6fd61e-a41c-45cd-b3a1-455a06d97453",
-      "timestamp": "2026-09-03T11:29:21.649Z",
-      "source": "system",
-      "message": "Emergency stop activated",
-      "detail": "Automatic bell triggers disabled until schedule is resumed"
-    },
-    {
-      "id": "1994431f-0f38-451c-b0e5-97c87c20ab40",
-      "timestamp": "2026-09-03T11:29:18.185Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "04f86592-49cf-460d-afc4-d3f89b4138b5",
-      "timestamp": "2026-09-03T11:27:27.426Z",
-      "source": "system",
-      "message": "Schedule entry updated",
-      "detail": "12:28 Tester"
-    },
-    {
-      "id": "280a2f71-ba40-451e-9637-40dfe3ca52bf",
-      "timestamp": "2026-09-03T11:27:17.500Z",
-      "source": "system",
-      "message": "Schedule entry updated",
-      "detail": "12:27 Tester"
-    },
-    {
-      "id": "69b2334a-02ab-454c-9627-46e0283402ef",
-      "timestamp": "2026-09-03T11:15:00.180Z",
-      "source": "automatic",
-      "message": "Long Break bell triggered",
-      "detail": "12:15 scheduled bell"
-    },
-    {
-      "id": "0b7543fa-9be8-44c0-8704-8b029456c536",
-      "timestamp": "2026-09-03T10:49:02.489Z",
-      "source": "automatic",
-      "message": "Tester bell triggered",
-      "detail": "11:49 scheduled bell"
-    },
-    {
-      "id": "f0bb3e04-899d-4916-8db8-8c02ed15b075",
-      "timestamp": "2026-09-03T10:48:17.570Z",
-      "source": "system",
-      "message": "Schedule entry added",
-      "detail": "11:49 Tester"
-    },
-    {
-      "id": "d498d0d7-5872-460a-8f40-8a2d1ac96014",
-      "timestamp": "2026-09-03T10:47:42.538Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "74e9bf22-656c-4805-8c9c-da6133b437e0",
-      "timestamp": "2026-09-03T09:15:39.481Z",
-      "source": "automatic",
-      "message": "Period Three Begins bell triggered",
-      "detail": "10:15 scheduled bell"
-    },
-    {
-      "id": "579ffaa0-71ad-4f1b-b0b8-64fd25c17361",
-      "timestamp": "2026-09-03T09:00:00.735Z",
-      "source": "automatic",
-      "message": "Short Break bell triggered",
-      "detail": "10:00 scheduled bell"
-    },
-    {
-      "id": "faccb34b-f1e9-4188-8b27-acb7f645fdca",
-      "timestamp": "2026-09-03T08:15:45.006Z",
-      "source": "system",
-      "message": "Schedule entry added",
-      "detail": "14:00 Period Six Begins"
-    },
-    {
-      "id": "e57b5ccd-22a8-4c49-8aa8-feafafec5680",
-      "timestamp": "2026-09-03T08:15:15.438Z",
-      "source": "system",
-      "message": "Schedule entry updated",
-      "detail": "12:15 Long Break"
-    },
-    {
-      "id": "851b66fb-e680-45ee-8ce2-2a68c2e26ccd",
-      "timestamp": "2026-09-03T08:14:11.651Z",
-      "source": "system",
-      "message": "Schedule entry added",
-      "detail": "13:00 Period Five Begins"
-    },
-    {
-      "id": "9a790e81-3e8b-4278-9a22-b8d81f287db3",
-      "timestamp": "2026-09-03T08:13:46.781Z",
-      "source": "system",
-      "message": "Schedule entry added",
-      "detail": "12:15 Long Break"
-    },
-    {
-      "id": "26e2275d-efe1-4dd0-a035-56ca869fe52c",
-      "timestamp": "2026-09-03T08:13:03.516Z",
-      "source": "system",
-      "message": "Schedule entry added",
-      "detail": "11:15 Period Four Begins"
-    },
-    {
-      "id": "c1d8d720-8b18-4caf-994c-718a0b19faac",
-      "timestamp": "2026-09-03T08:11:39.081Z",
-      "source": "system",
-      "message": "Schedule entry updated",
-      "detail": "10:15 Period Three Begins"
-    },
-    {
-      "id": "f4f72076-d48a-40e8-9c3e-e787b8427587",
-      "timestamp": "2026-09-03T08:11:34.617Z",
-      "source": "system",
-      "message": "Schedule entry updated",
-      "detail": "10:00 Short Break"
-    },
-    {
-      "id": "c3fb870b-0a4a-4c2d-96f6-4917ce5b8086",
-      "timestamp": "2026-09-03T08:10:56.931Z",
-      "source": "system",
-      "message": "Schedule entry added",
-      "detail": "10:15 Period Three Begins"
-    },
-    {
-      "id": "3d83d67b-2acb-4620-9eb4-223a0e3ac965",
-      "timestamp": "2026-09-03T08:10:46.995Z",
-      "source": "system",
-      "message": "Schedule entry added",
-      "detail": "10:00 Short Break"
-    },
-    {
-      "id": "4f17c5c1-0bf0-4d04-820b-e4bacae5cd0d",
-      "timestamp": "2026-09-03T08:09:55.187Z",
-      "source": "system",
-      "message": "Schedule entry added",
-      "detail": "09:00 Period Two Begins"
-    },
-    {
-      "id": "de8c4682-2bf5-406f-8ad2-3941ab9d14b9",
-      "timestamp": "2026-09-03T07:53:27.792Z",
-      "source": "system",
-      "message": "Schedule resumed",
-      "detail": "Operator changed automatic trigger state"
-    },
-    {
-      "id": "9c66187c-0ef0-4724-90d4-65ed6745eb48",
-      "timestamp": "2026-09-03T07:53:26.345Z",
-      "source": "system",
-      "message": "Emergency stop activated",
-      "detail": "Automatic bell triggers disabled until schedule is resumed"
-    },
-    {
-      "id": "2e0f961d-ad57-4eb1-b103-730b62fc8cd0",
-      "timestamp": "2026-09-03T07:53:20.335Z",
-      "source": "system",
-      "message": "Settings updated",
-      "detail": "Audio and school profile saved"
-    },
-    {
-      "id": "b8ac1570-3669-4fc8-ac80-6af019ff8553",
-      "timestamp": "2026-09-03T07:53:07.446Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "e6f447a4-f640-4ac9-a6cf-f9d3aedf0a6d",
-      "timestamp": "2026-09-03T07:52:58.919Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "726c13fa-9aaf-4862-ac2c-837573a32799",
-      "timestamp": "2026-09-03T07:52:55.214Z",
-      "source": "system",
-      "message": "Settings updated",
-      "detail": "Audio and school profile saved"
-    },
-    {
-      "id": "41111399-4161-4c33-ad02-6aab7d51f81c",
-      "timestamp": "2026-09-03T07:52:38.815Z",
-      "source": "system",
-      "message": "Schedule resumed",
-      "detail": "Operator changed automatic trigger state"
-    },
-    {
-      "id": "24edcb50-b312-436d-bd9d-df879f45dae9",
-      "timestamp": "2026-09-03T07:52:34.672Z",
-      "source": "system",
-      "message": "Emergency stop activated",
-      "detail": "Automatic bell triggers disabled until schedule is resumed"
-    },
-    {
-      "id": "19d2eb31-2fef-48a6-a722-58fce641eee8",
-      "timestamp": "2026-09-03T07:52:33.688Z",
-      "source": "system",
-      "message": "Emergency stop activated",
-      "detail": "Automatic bell triggers disabled until schedule is resumed"
-    },
-    {
-      "id": "1fd1629b-1010-4a16-bc54-8212dda33119",
-      "timestamp": "2026-09-03T07:52:32.191Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "ffc32069-28cd-49ef-85cb-e2060b1ab9fb",
-      "timestamp": "2026-09-03T07:52:31.497Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "9baaa68c-a7c4-49cd-9c47-70b71f9bd467",
-      "timestamp": "2026-09-03T07:52:26.114Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "b491b007-73e0-4279-9a5d-294e1a428d9b",
-      "timestamp": "2026-09-03T07:52:19.958Z",
-      "source": "system",
-      "message": "Schedule entry added",
-      "detail": "08:00 Period One Begins"
-    },
-    {
-      "id": "4befcaa0-0341-4e9b-a875-45fbc6b23bf9",
-      "timestamp": "2026-09-03T07:28:39.782Z",
-      "source": "system",
-      "message": "Schedule entry removed",
-      "detail": "14:40 Closing bell"
-    },
-    {
-      "id": "9b33281d-acfa-4cf2-8886-de93bd7584fa",
-      "timestamp": "2026-09-03T07:28:38.240Z",
-      "source": "system",
-      "message": "Schedule entry removed",
-      "detail": "12:35 Lunch bell"
-    },
-    {
-      "id": "ee6592e0-0027-4ed2-97d4-effb766a80aa",
-      "timestamp": "2026-09-03T07:28:37.578Z",
-      "source": "system",
-      "message": "Schedule entry removed",
-      "detail": "10:50 Classes resume"
-    },
-    {
-      "id": "192df2d7-e1e6-443c-9f53-fe17e2912231",
-      "timestamp": "2026-09-03T07:28:36.844Z",
-      "source": "system",
-      "message": "Schedule entry removed",
-      "detail": "10:30 Morning break"
-    },
-    {
-      "id": "33356a9b-5cf3-484d-bb88-da621e185963",
-      "timestamp": "2026-09-03T07:28:36.267Z",
-      "source": "system",
-      "message": "Schedule entry removed",
-      "detail": "08:10 Period 1 begins"
-    },
-    {
-      "id": "eb87d13a-fc1a-46ca-ae32-7f74cf09f790",
-      "timestamp": "2026-09-03T07:28:35.635Z",
-      "source": "system",
-      "message": "Schedule entry removed",
-      "detail": "07:45 Morning assembly"
-    },
-    {
-      "id": "dc0f6c93-95fa-4746-ae6a-193316125fdf",
-      "timestamp": "2026-09-03T07:28:13.799Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "4e09c1ac-7cbe-4be4-a70f-54d14e2570b5",
-      "timestamp": "2026-09-03T07:28:12.480Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "75c8d475-667e-4bb8-89b7-8ab42fc1a265",
-      "timestamp": "2026-05-19T13:51:01.286Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "def2d0ab-1b05-400e-bf29-0e34e0264869",
-      "timestamp": "2026-05-19T13:50:57.691Z",
-      "source": "system",
-      "message": "Settings updated",
-      "detail": "Audio and school profile saved"
-    },
-    {
-      "id": "566ba655-1c46-48ff-8ac2-401116716179",
-      "timestamp": "2026-05-19T13:50:56.727Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "6fb42c19-f7f5-4da1-9db6-9203cf3ad3aa",
-      "timestamp": "2026-05-19T13:50:52.638Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "a683522a-da00-4bd6-91a3-9485c0c259d2",
-      "timestamp": "2026-05-19T13:50:45.531Z",
-      "source": "system",
-      "message": "Settings updated",
-      "detail": "Audio and school profile saved"
-    },
-    {
-      "id": "c4edd567-0758-406c-a859-c3aaec633664",
-      "timestamp": "2026-05-19T13:50:31.895Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "83858610-922a-4250-94fb-d7f96ee39dc0",
-      "timestamp": "2026-05-19T13:47:18.225Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "f933a7ba-1a7f-405f-b9fc-628553362821",
-      "timestamp": "2026-05-19T13:47:18.022Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "e9bb0e36-1412-4e06-96f2-11b06a63d69e",
-      "timestamp": "2026-05-19T13:47:17.856Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "8184b845-754e-40c6-ae1b-86fa92fa5d61",
-      "timestamp": "2026-05-19T13:47:17.647Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "fa7e64fd-618f-47a9-ad00-d1641b2231b7",
-      "timestamp": "2026-05-19T13:47:15.557Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "87c33300-2019-4344-9777-d5117abbf583",
-      "timestamp": "2026-05-19T13:47:14.056Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "3d41a831-6fcb-4e23-8eb7-daf42d32003e",
-      "timestamp": "2026-05-19T13:47:13.874Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "a10527e1-e62c-47cc-893a-ded5c1578ec0",
-      "timestamp": "2026-05-19T13:47:13.706Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "017ba041-c361-4899-8398-dc27e6665193",
-      "timestamp": "2026-05-19T13:47:13.533Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "73a66894-6ac2-4558-994c-995485cdabbd",
-      "timestamp": "2026-05-19T13:47:11.710Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "a833f06d-3ebe-4564-bc2d-7a845083286b",
-      "timestamp": "2026-05-19T13:47:11.508Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "ce83a405-021f-4814-8b79-eca6178be9be",
-      "timestamp": "2026-05-19T13:47:11.323Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "e81b17f2-5c3c-4b20-a623-fc072d4614a1",
-      "timestamp": "2026-05-19T13:47:11.162Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "624d488f-2d46-420a-becc-02c4b43b3937",
-      "timestamp": "2026-05-19T13:47:10.833Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "cb7fda25-06d5-40a2-92a7-35cad657630c",
-      "timestamp": "2026-05-19T13:47:07.988Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "cad6d1ac-c3d3-4469-add7-b10e2f4e3567",
-      "timestamp": "2026-05-19T13:47:04.837Z",
-      "source": "system",
-      "message": "Settings updated",
-      "detail": "Audio and school profile saved"
-    },
-    {
-      "id": "309e6118-b0f8-48c8-aa5b-e15c97093872",
-      "timestamp": "2026-05-19T13:47:02.484Z",
-      "source": "system",
-      "message": "Settings updated",
-      "detail": "Audio and school profile saved"
-    },
-    {
-      "id": "fe8e65a1-84c4-4882-86f9-e53eb5658757",
-      "timestamp": "2026-05-19T13:40:00.185Z",
-      "source": "automatic",
-      "message": "Closing bell bell triggered",
-      "detail": "14:40 scheduled bell"
-    },
-    {
-      "id": "16dade29-a23b-452f-9715-749a4eacd4f3",
-      "timestamp": "2026-05-19T13:38:17.855Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "e3c01c48-266a-4af2-bf96-37e5d4dd2b63",
-      "timestamp": "2026-05-19T13:38:11.011Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "5d04e0ce-4377-4705-89a1-a20ca461655e",
-      "timestamp": "2026-05-19T13:38:06.054Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "cc1879e3-6a4f-4aa1-8cc1-8cb3cbcf5671",
-      "timestamp": "2026-05-19T13:38:04.734Z",
-      "source": "system",
-      "message": "Settings updated",
-      "detail": "Audio and school profile saved"
-    },
-    {
-      "id": "2d0d4b63-f3f0-44c8-a0a5-d6bd0d80740f",
-      "timestamp": "2026-05-19T13:34:15.107Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "469a57ad-40dc-40be-9ac4-e61600f5190a",
-      "timestamp": "2026-05-19T13:34:15.102Z",
-      "source": "system",
-      "message": "Settings updated",
-      "detail": "Audio and school profile saved"
-    },
-    {
-      "id": "67402143-a4bd-44a0-acc2-b7c3d0f2814c",
-      "timestamp": "2026-05-19T13:34:10.340Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "a367203e-80db-4777-a433-3f7ae84d25bc",
-      "timestamp": "2026-05-19T13:34:10.335Z",
-      "source": "system",
-      "message": "Settings updated",
-      "detail": "Audio and school profile saved"
-    },
-    {
-      "id": "b5032daa-9541-4a64-bff5-1f44cabe3b03",
-      "timestamp": "2026-05-19T13:26:50.264Z",
-      "source": "system",
-      "message": "Settings updated",
-      "detail": "Audio and school profile saved"
-    },
-    {
-      "id": "2bef6c5e-387d-45a4-9176-63b40925a277",
-      "timestamp": "2026-05-19T13:25:29.626Z",
-      "source": "system",
-      "message": "Settings updated",
-      "detail": "Audio and school profile saved"
-    },
-    {
-      "id": "6d1baffe-eff3-4fea-be9e-0a23f51db053",
-      "timestamp": "2026-05-19T13:24:21.241Z",
-      "source": "system",
-      "message": "Settings updated",
-      "detail": "Audio and school profile saved"
-    },
-    {
-      "id": "5c71434a-5a6a-4203-a8b7-3f1d8f536f7d",
-      "timestamp": "2026-05-19T13:24:05.720Z",
-      "source": "system",
-      "message": "Settings updated",
-      "detail": "Audio and school profile saved"
-    },
-    {
-      "id": "7e299b30-f366-4bee-b04a-027a052b561d",
-      "timestamp": "2026-05-19T13:13:47.814Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "5baab54f-431f-4b31-a1f6-0b54ad9cf33e",
-      "timestamp": "2026-05-19T13:10:42.614Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "9e227a58-abbc-42ab-839d-f69fc80c0467",
-      "timestamp": "2026-05-19T13:09:11.220Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "74fb2cd7-ab39-481a-98c2-7a4196d1fa38",
-      "timestamp": "2026-05-19T13:08:55.396Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "7c025988-de0f-442a-a01d-ab43baff52ec",
-      "timestamp": "2026-05-19T13:05:38.938Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "2c8479da-b9e2-48e9-8264-731af219081e",
-      "timestamp": "2026-05-18T21:07:07.833Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "2042adc4-b99a-4774-ac54-3391741691d4",
-      "timestamp": "2026-05-18T20:37:44.816Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "57d42d48-c96f-462b-9579-6923d6ac9152",
-      "timestamp": "2026-05-13T13:40:00.224Z",
-      "source": "automatic",
-      "message": "Closing bell bell triggered",
-      "detail": "14:40 scheduled bell"
-    },
-    {
-      "id": "e22e067a-de58-41a8-84e3-fbc39c7bb672",
-      "timestamp": "2026-05-13T11:35:01.924Z",
-      "source": "automatic",
-      "message": "Lunch bell bell triggered",
-      "detail": "12:35 scheduled bell"
-    },
-    {
-      "id": "3a7b287a-2dac-4da0-83a6-8c31d75c8476",
-      "timestamp": "2026-05-13T09:50:00.030Z",
-      "source": "automatic",
-      "message": "Classes resume bell triggered",
-      "detail": "10:50 scheduled bell"
-    },
-    {
-      "id": "834be587-f170-44de-9162-529a9fc8d366",
-      "timestamp": "2026-05-13T09:30:01.893Z",
-      "source": "automatic",
-      "message": "Morning break bell triggered",
-      "detail": "10:30 scheduled bell"
-    },
-    {
-      "id": "8268b443-b44b-4083-b466-1b3fc4dc1966",
-      "timestamp": "2026-05-13T07:10:01.413Z",
-      "source": "automatic",
-      "message": "Period 1 begins bell triggered",
-      "detail": "08:10 scheduled bell"
-    },
-    {
-      "id": "e3cb35df-3e36-4f58-9d32-ef0a62c7fc0c",
-      "timestamp": "2026-05-13T06:45:02.054Z",
-      "source": "automatic",
-      "message": "Morning assembly bell triggered",
-      "detail": "07:45 scheduled bell"
-    },
-    {
-      "id": "d0752096-4e95-4bc5-b121-f7083c58b481",
-      "timestamp": "2026-05-12T19:48:43.897Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "34de4f8d-ed15-4736-81e1-50b58a99e42f",
-      "timestamp": "2026-05-12T19:48:43.297Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    },
-    {
-      "id": "86ec7b62-a9ea-4c9d-a82f-5ccd6b3b3dee",
-      "timestamp": "2026-05-12T14:22:13.092Z",
-      "source": "manual",
-      "message": "Manual override bell triggered",
-      "detail": "Triggered from dashboard control"
-    }
-  ],
+  "logs": [],
   "settings": {
     "schoolName": "Childrens International school Lekki",
     "bellVolume": 70,
@@ -910,91 +341,11 @@
     "autoTriggerWindowSeconds": 45,
     "manualTone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav"
   },
-  "playerSignals": [
-    {
-      "id": "25bef372-9bf9-4d1b-be72-4cd26e18e46c",
-      "type": "stop",
-      "createdAt": "2026-09-03T11:38:04.987Z",
-      "reason": "Emergency stop activated"
-    },
-    {
-      "id": "1a138d5a-d7dd-436a-8a0b-83604cc48d19",
-      "type": "ring",
-      "createdAt": "2026-09-03T11:38:32.824Z",
-      "source": "automatic",
-      "entryId": "c2e0fc8f-9a5c-41b1-81a7-c2d8f7397e46",
-      "label": "Tester",
-      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
-      "durationSeconds": 23,
-      "volume": 70,
-      "detail": "12:34 scheduled bell"
-    },
-    {
-      "id": "9f41afdf-1c62-4349-b909-f2691b14dfd5",
-      "type": "ring",
-      "createdAt": "2026-09-03T11:58:02.213Z",
-      "source": "automatic",
-      "entryId": "c2e0fc8f-9a5c-41b1-81a7-c2d8f7397e46",
-      "label": "Tester",
-      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
-      "durationSeconds": 23,
-      "volume": 70,
-      "detail": "12:58 scheduled bell"
-    },
-    {
-      "id": "bac83852-bfab-44db-96e7-4125625415c0",
-      "type": "ring",
-      "createdAt": "2026-09-03T12:00:02.226Z",
-      "source": "automatic",
-      "entryId": "4773858a-7907-4cc9-a5df-15a556f6cfda",
-      "label": "Period Five Begins",
-      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
-      "durationSeconds": 23,
-      "volume": 70,
-      "detail": "13:00 scheduled bell"
-    },
-    {
-      "id": "1ded27d6-a583-4ceb-8e41-8b08c6cfa4c7",
-      "type": "ring",
-      "createdAt": "2026-09-03T12:03:00.012Z",
-      "source": "automatic",
-      "entryId": "c2e0fc8f-9a5c-41b1-81a7-c2d8f7397e46",
-      "label": "Tester",
-      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
-      "durationSeconds": 23,
-      "volume": 70,
-      "detail": "13:03 scheduled bell"
-    },
-    {
-      "id": "c1c56cf4-4a8c-4457-bdfa-b5328a095238",
-      "type": "ring",
-      "createdAt": "2026-09-03T12:03:02.272Z",
-      "source": "automatic",
-      "entryId": "c2e0fc8f-9a5c-41b1-81a7-c2d8f7397e46",
-      "label": "Tester",
-      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
-      "durationSeconds": 23,
-      "volume": 70,
-      "detail": "13:03 scheduled bell"
-    },
-    {
-      "id": "e7bcec6e-5f2a-4066-95ab-dad97d8f7718",
-      "type": "ring",
-      "createdAt": "2026-09-03T12:12:02.335Z",
-      "source": "automatic",
-      "entryId": "c2e0fc8f-9a5c-41b1-81a7-c2d8f7397e46",
-      "label": "Tester",
-      "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
-      "durationSeconds": 23,
-      "volume": 70,
-      "detail": "13:12 scheduled bell"
-    }
-  ],
+  "playerSignals": [],
   "triggeredBellKeys": [],
-  "lastAutomaticCheckAt": "2026-09-03T12:37:44.755Z",
   "playerStatus": {
-    "lastSeenAt": "2026-09-03T11:30:39.285Z",
-    "audioEnabled": false,
+    "lastSeenAt": null,
+    "audioEnabled": true,
     "label": "Main bell PC"
   }
 }

@@ -1,0 +1,122 @@
+[
+  {
+    "id": "571b7d9f-30d3-46f2-8180-fcefb602ca2f",
+    "label": "Period One Begins",
+    "time": "08:00",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": ""
+  },
+  {
+    "id": "53a36491-9f98-4ee6-9b37-6465124f5553",
+    "label": "Period Two Begins",
+    "time": "09:00",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": ""
+  },
+  {
+    "id": "df0b24ad-09eb-410c-8f43-abff37bbf8a4",
+    "label": "Short Break",
+    "time": "10:00",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": ""
+  },
+  {
+    "id": "f3b6404f-080d-420e-9299-0ab3f659ba8a",
+    "label": "Period Three Begins",
+    "time": "10:15",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": ""
+  },
+  {
+    "id": "053fcfb7-ae44-4f54-857b-5a968fb04f0d",
+    "label": "Period Four Begins",
+    "time": "11:15",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": ""
+  },
+  {
+    "id": "e0b1d55d-2064-4959-b81a-070af550cbea",
+    "label": "Long Break",
+    "time": "12:15",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": ""
+  },
+  {
+    "id": "4773858a-7907-4cc9-a5df-15a556f6cfda",
+    "label": "Period Five Begins",
+    "time": "13:00",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": ""
+  },
+  {
+    "id": "f44644ef-103e-4fab-996b-743c8d2c9fc5",
+    "label": "Period Six Begins",
+    "time": "14:00",
+    "days": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "tone": "Johann Strauss II - The Blue Danube Waltz - Trim.wav",
+    "enabled": true,
+    "note": ""
+  }
+]
